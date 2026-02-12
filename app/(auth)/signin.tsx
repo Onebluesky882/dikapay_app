@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   Alert,
@@ -139,11 +140,13 @@ const SignIn: React.FC = () => {
       </View>
 
       {/* ---------------- Footer ---------------- */}
-      <View className="mt-10 items-center">
+      <View className="mt-10 items-center flex">
         <Text className="text-gray-500">
-          Don't have an account?{" "}
-          <Text className="text-indigo-600 font-bold">Create account</Text>
+          <Text>Don't have an account?</Text>
         </Text>
+        <TouchableOpacity onPress={() => router.push("/(auth)/signup")}>
+          <Text className="text-indigo-600 font-bold">Create account</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );

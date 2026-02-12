@@ -18,7 +18,7 @@ export default function Home() {
         </Text>
 
         <TouchableOpacity
-          onPress={() => router.push("/(tabs)/SignIn")}
+          onPress={() => router.push("/(auth)/signin")}
           className="bg-indigo-600 px-8 py-4 rounded-2xl mt-8 shadow-lg shadow-indigo-300"
         >
           <Text className="text-white font-semibold text-base">
@@ -72,7 +72,7 @@ export default function Home() {
         </Text>
 
         <TouchableOpacity
-          onPress={() => router.push("/(tabs)/SignIn")}
+          onPress={() => router.push("/")}
           className="bg-indigo-600 px-10 py-4 rounded-2xl mt-6"
         >
           <Text className="text-white font-semibold">สมัครใช้งาน</Text>
