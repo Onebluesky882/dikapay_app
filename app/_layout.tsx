@@ -8,19 +8,23 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 import "../global.css";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import React from "react";
 
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
+import { KeyboardProvider } from "react-native-keyboard-controller";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack screenOptions={{ headerShown: false }} />
+      <SafeAreaProvider>
+        <KeyboardProvider>
+          <Stack screenOptions={{ headerShown: false }} />
 
-      <StatusBar style="auto" />
+          <StatusBar style="auto" />
+        </KeyboardProvider>
+      </SafeAreaProvider>
     </ThemeProvider>
   );
 }

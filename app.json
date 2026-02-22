@@ -1,12 +1,12 @@
 {
   "expo": {
-    "name": "dikapay_app",
-    "slug": "dikapay_app",
+    "name": "dikapay",
+    "slug": "dikapay",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "dikapayapp",
-    "userInterfaceStyle": "automatic",
+    "scheme": "dikapay",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true

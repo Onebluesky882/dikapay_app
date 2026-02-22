@@ -1,8 +1,9 @@
-import { router } from "expo-router";
+import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { router } from "expo-router";
 import LottieView from "lottie-react-native";
-export default function Index() {
+
+export default function index() {
   return (
     <View className="flex-1 bg-white items-center justify-center px-6">
       {/* Tech SVG */}
@@ -18,9 +19,8 @@ export default function Index() {
       <Text className="text-base text-gray-500 text-center mb-10">
         Secure. Simple. Reliable digital payments.
       </Text>
-
       <TouchableOpacity
-        onPress={() => router.push("/(app)/homepage")}
+        onPress={() => router.push("/(tabs)")}
         className="bg-[#3f5be9] px-8 py-4 rounded-xl w-full"
         activeOpacity={0.85}
       >
