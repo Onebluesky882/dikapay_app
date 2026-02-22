@@ -1,8 +1,16 @@
 import { View, Text } from "react-native";
 import React from "react";
 import { Menu } from "@/components/homepage/Menu";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Host } from "@expo/ui/swift-ui";
+import {
+  GlassContainer,
+  GlassView,
+  isLiquidGlassAvailable,
+} from "expo-glass-effect";
 
 export default function homepage() {
+  console.log("Liquid Glass:", isLiquidGlassAvailable());
   const menu = [
     {
       id: "1",
@@ -45,10 +53,23 @@ export default function homepage() {
 }
 
 export const Banner = () => {
+  const isGlassAvailable = isLiquidGlassAvailable();
   return (
-    <View className="border p-2 rounded-sm">
-      {/* slice image  */}
-      <Text>banner</Text>
-    </View>
+    <>
+      {isGlassAvailable && (
+        <GlassView
+          style={{
+            position: "absolute",
+            top: 100,
+            right: 20,
+            borderRadius: 20,
+            padding: 16,
+            width: 200,
+          }}
+        >
+          <Text>Custom Glass Menu</Text>
+        </GlassView>
+      )}
+    </>
   );
 };
