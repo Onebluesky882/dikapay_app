@@ -1,65 +1,33 @@
-import { Menu } from "@/components/homepage/Menu";
-import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
+import LottieView from "lottie-react-native";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, TouchableOpacity, View } from "react-native";
 
-export default function Homepage() {
-  const menu = [
-    { id: "1", icon: "cake", name: "ขนม" },
-    { id: "2", icon: "restaurant", name: "อาหาร" },
-    { id: "3", icon: "coffee", name: "กาแฟ" },
-    { id: "4", icon: "shopping-bag", name: "เสื้อผ้า" },
-    { id: "5", icon: "shopping-cart", name: "ซูเปอร์มาร์เก็ต" },
-    { id: "6", icon: "store", name: "สะดวกซื้อ" },
-  ];
-
+export default function index() {
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <View className="px-4 pt-4 gap-4">
-        <Banner />
-        <Menu menu={menu} />
-      </View>
-    </SafeAreaView>
-  );
-}
+    <View className="flex-1 bg-white items-center justify-center px-6">
+      {/* Tech SVG */}
+      <LottieView
+        source={require("../../assets/dottie/Delivery.json")}
+        autoPlay
+        loop
+        style={{ width: 200, height: 200 }}
+      />
 
-const Banner = () => {
-  const balance = 2450.75; // mock dikapay balance
+      <Text className="text-3xl font-semibold text-blue-900 mb-4">Dikapay</Text>
 
-  return (
-    <View className="bg-indigo-600 rounded-3xl p-5 shadow-lg">
-      {/* Header */}
-      <View className="flex-row justify-between items-center">
-        <Text className="text-white text-lg font-semibold">DikaPay Wallet</Text>
-        <Ionicons name="wallet-outline" size={24} color="white" />
-      </View>
-
-      {/* Balance */}
-      <View className="mt-6">
-        <Text className="text-indigo-200 text-sm">ยอดเงินคงเหลือ</Text>
-        <Text className="text-white text-3xl font-bold mt-1">
-          ฿ {balance.toLocaleString()}
+      <Text className="text-base text-gray-500 text-center mb-10">
+        Secure. Simple. Reliable digital payments.
+      </Text>
+      <TouchableOpacity
+        onPress={() => router.push("/(app)/(tabs)")}
+        className="bg-[#3f5be9] px-8 py-4 rounded-xl w-full"
+        activeOpacity={0.85}
+      >
+        <Text className="text-white text-base font-medium text-center">
+          Get Started
         </Text>
-      </View>
-
-      {/* Actions */}
-      <View className="flex-row justify-between mt-6">
-        <ActionButton icon="arrow-up-circle" label="โอนเงิน" />
-        <ActionButton icon="arrow-down-circle" label="รับเงิน" />
-        <ActionButton icon="qr-code" label="สแกน" />
-      </View>
+      </TouchableOpacity>
     </View>
   );
-};
-
-const ActionButton = ({ icon, label }: { icon: any; label: string }) => {
-  return (
-    <Pressable className="items-center">
-      <View className="bg-white/20 p-3 rounded-full">
-        <Ionicons name={icon} size={20} color="white" />
-      </View>
-      <Text className="text-white text-xs mt-2">{label}</Text>
-    </Pressable>
-  );
-};
+}

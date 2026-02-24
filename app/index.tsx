@@ -6,8 +6,7 @@ import React from "react";
 // if not redirect to public  if true  redirect to (app)
 
 const index = () => {
-  return <Redirect href={"/(tabs)"} />;
+  return <Redirect href={"/(public)"} />;
 };
 
 export default index;
-
