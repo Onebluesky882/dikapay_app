@@ -6,7 +6,7 @@ export default function index() {
   return (
     <SafeAreaView>
       <View>
-        <Text className="text-back ">homepage</Text>
+        <Text className="text-back bg-red-400">homepage 121323</Text>
       </View>
     </SafeAreaView>
   );
