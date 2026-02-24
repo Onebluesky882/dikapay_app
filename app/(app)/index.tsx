@@ -1,7 +1,7 @@
-import { View, Text, TouchableOpacity } from "react-native";
-import React from "react";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
+import React from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
 export default function index() {
   return (
