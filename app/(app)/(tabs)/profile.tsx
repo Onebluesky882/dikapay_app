@@ -2,11 +2,11 @@ import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function index() {
+export default function user() {
   return (
     <SafeAreaView>
       <View>
-        <Text className="text-back bg-red-400">homepage 121323</Text>
+        <Text>profile</Text>
       </View>
     </SafeAreaView>
   );
