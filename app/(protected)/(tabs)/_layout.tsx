@@ -9,7 +9,7 @@ import React from "react";
 export default function _layout() {
   return (
     <NativeTabs iconColor={"gray"}>
-      <NativeTabs.Trigger name="index" disableScrollToTop>
+      <NativeTabs.Trigger name="(home)" disableScrollToTop>
         <Label>Home</Label>
         <Icon sf="house.fill" drawable="ic_menu_view" />
       </NativeTabs.Trigger>
