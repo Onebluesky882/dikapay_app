@@ -1,7 +1,6 @@
-import { Menu } from "@/components/homepage/Menu";
+import { useAuthStore } from "@/src/store/auth-store";
 import { Ionicons } from "@expo/vector-icons";
-import { router } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -14,22 +13,13 @@ export default function homepage() {
     { id: "5", icon: "heart", name: "ซูเปอร์มาร์เก็ต" },
     { id: "6", icon: "heart", name: "สะดวกซื้อ" },
   ];
-  const [user, setUser] = useState(true);
-
-  const handleTouch = () => {
-    if (user) {
-      router.push("/(app)/(tabs)");
-    } else {
-      router.push("/(auth)/sign-in");
-      // to login page
-    }
-  };
+  const user = useAuthStore((state) => state.user);
+  console.log("user :", user);
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       <View className="px-4 pt-4 gap-4">
+        <Text>{user?.email}</Text>
         <Banner />
-
-        <Menu menu={menu} checkUser={handleTouch} />
       </View>
     </SafeAreaView>
   );

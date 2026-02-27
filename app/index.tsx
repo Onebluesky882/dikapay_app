@@ -20,7 +20,7 @@ export default function index() {
         Secure. Simple. Reliable digital payments.
       </Text>
       <TouchableOpacity
-        onPress={() => router.replace("/sign-in")}
+        onPress={() => router.push("/sign-in")}
         className="bg-[#3f5be9] px-8 py-4 rounded-xl w-full"
         activeOpacity={0.85}
       >
