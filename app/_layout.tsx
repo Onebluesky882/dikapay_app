@@ -43,6 +43,7 @@ export default function RootLayout() {
             {/* เข้า tabs เมื่อ login แล้ว */}
             <Stack.Protected guard={!!user}>
               <Stack.Screen name="(tabs)" />
+              <Stack.Screen name="(shop)" />
             </Stack.Protected>
             <Stack.Protected guard={!user}>
               <Stack.Screen name="index" />
