@@ -2,7 +2,6 @@ import { NativeTabs } from "expo-router/unstable-native-tabs";
 import React from "react";
 
 export default function _layout() {
-  const orderStatus = "done"; // pending | cooking | done
   const cookingCount = 2;
   return (
     <NativeTabs
@@ -23,6 +22,11 @@ export default function _layout() {
         <NativeTabs.Trigger.Label>ranking</NativeTabs.Trigger.Label>
 
         <NativeTabs.Trigger.Icon sf="star.fill" md="star" />
+      </NativeTabs.Trigger>
+
+      <NativeTabs.Trigger name="shop">
+        <NativeTabs.Trigger.Label>Shop</NativeTabs.Trigger.Label>
+        <NativeTabs.Trigger.Icon sf="bag.fill" md="shopping_bag" />
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="orders">
         <NativeTabs.Trigger.Label>Orders</NativeTabs.Trigger.Label>
