@@ -124,10 +124,7 @@ export default function User() {
               ฿ 1,250.00
             </Text>
 
-            <Pressable
-              onPress={() => router.push("/topup")}
-              className="mt-4 bg-orange-200 rounded-xl py-3 items-center"
-            >
+            <Pressable className="mt-4 bg-orange-200 rounded-xl py-3 items-center">
               <Text className="text-amber-900 font-medium">เติมเงิน</Text>
             </Pressable>
           </View>
@@ -169,10 +166,7 @@ export default function User() {
               <Text className="text-amber-900">ประวัติการซื้ออาหาร</Text>
             </Pressable>
 
-            <Pressable
-              onPress={() => router.push("/membership")}
-              className="px-5 py-4"
-            >
+            <Pressable className="px-5 py-4">
               <Text className="text-amber-900">สถานะสมาชิก</Text>
             </Pressable>
           </View>

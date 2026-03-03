@@ -5,10 +5,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function orders() {
   const handleRouter = () => {
-    router.push({
-      pathname: "/(tabs)/(shop)/[id]",
-      params: { id: "1" },
-    });
+    console.log("click ");
+    router.push("/shop/1");
   };
 
   return (
