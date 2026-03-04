@@ -34,7 +34,7 @@ export default function ShopIndex() {
             <TouchableOpacity
               key={shop.id}
               onPress={() => router.push(`/(tabs)/shop/${shop.id}`)}
-              className="bg-white p-4 rounded-2xl mb-3 shadow-sm"
+              className="bg-blue-200 p-4 rounded-2xl mb-3 shadow-sm"
             >
               <Text className="text-lg font-semibold">{shop.name}</Text>
               <Text className="text-amber-500 mt-1">⭐ {shop.rating}</Text>
