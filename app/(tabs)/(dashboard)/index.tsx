@@ -1,3 +1,4 @@
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import {
@@ -115,6 +116,7 @@ export default function User() {
               ชื่อนี้จะแสดงตอนสั่งอาหารหน้าร้าน
             </Text>
           </View>
+          <CardReword />
 
           {/* Balance Card */}
           <View className="bg-white rounded-2xl p-5 border border-orange-100 mb-6">
@@ -181,5 +183,57 @@ export default function User() {
         </View>
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+export function CardReword() {
+  return (
+    <View
+      className=" mt-4 shadow-md border border-gray-100 bg-white p-8"
+      style={{
+        padding: 16,
+        borderRadius: 16,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+    >
+      {/* Left: Icon + Text */}
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: "#FFE8B6",
+            padding: 10,
+            borderRadius: 50,
+            marginRight: 12,
+          }}
+        >
+          <MaterialCommunityIcons name="teddy-bear" size={24} color="#F59E0B" />
+        </View>
+
+        <View>
+          <Text style={{ fontSize: 12, color: "#6B7280" }}>คะแนนสะสม</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              fontWeight: "600",
+              marginTop: 4,
+            }}
+          >
+            120 แต้ม
+          </Text>
+          <Text>
+            {" "}
+            ครบ 1000 แต้ม แลกรับส่วนลด{" "}
+            <Text className="text-red-500">5 บาท</Text>{" "}
+          </Text>
+        </View>
+      </View>
+    </View>
   );
 }

@@ -1,19 +1,19 @@
 export const banners = [
   {
     id: "1",
-    image: "https://picsum.photos/800/400?food1",
+    image: "https://loremflickr.com/800/400/food",
   },
   {
     id: "2",
-    image: "https://picsum.photos/800/400?food2",
+    image: "https://loremflickr.com/800/400/food",
   },
   {
     id: "3",
-    image: "https://picsum.photos/800/400?food3",
+    image: "https://loremflickr.com/800/400/food",
   },
   {
     id: "4",
-    image: "https://picsum.photos/800/400?food2",
+    image: "https://loremflickr.com/800/400/food",
   },
 ];
 
@@ -23,21 +23,21 @@ export const recommendedShops = [
     name: "ครัวบ้านสวน",
     category: "อาหารตามสั่ง",
     rating: 4.7,
-    image: "https://picsum.photos/400/300?restaurant1",
+    image: "https://loremflickr.com/400/300/restaurant",
   },
   {
     id: "2",
     name: "เสือร้องไห้ Grill",
     category: "สเต็ก & เนื้อย่าง",
     rating: 4.8,
-    image: "https://picsum.photos/400/300?restaurant2",
+    image: "https://loremflickr.com/400/300/restaurant",
   },
   {
     id: "3",
     name: "ผัดไทโบราณ",
     category: "ก๋วยเตี๋ยว & ผัดไทย",
     rating: 4.6,
-    image: "https://picsum.photos/400/300?restaurant3",
+    image: "https://loremflickr.com/400/300/restaurant",
   },
 ];
 export const menus = [
