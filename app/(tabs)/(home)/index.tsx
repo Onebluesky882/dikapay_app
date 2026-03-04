@@ -28,7 +28,7 @@ export default function HomePage() {
   const ITEM_WIDTH = width - SPACING * 2; // 👈 หัก padding ซ้ายขวา
   return (
     <>
-      <SafeAreaView style={{ backgroundColor: "#caffbf", marginBottom: 8 }}>
+      <SafeAreaView style={{ backgroundColor: "#60A524", marginBottom: 8 }}>
         <Text>สวัสดี</Text>
         <Text>แสกน</Text>
       </SafeAreaView>

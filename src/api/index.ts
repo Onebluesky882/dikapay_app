@@ -1,5 +1,4 @@
 import axios from "axios";
-import * as SecureStore from "expo-secure-store";
 
 const baseURL = process.env.EXPO_PUBLIC_API_URL;
 
@@ -13,4 +12,3 @@ export const api = axios.create({
     "Content-Type": "application/json",
   },
 });
- 
