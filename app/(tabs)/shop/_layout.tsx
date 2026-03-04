@@ -4,7 +4,7 @@ import React from "react";
 export default function _layout() {
   return (
     <Stack>
-      <Stack.Screen name="index" options={{}} />
+      <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="[id]" options={{ title: "" }} />
     </Stack>
   );

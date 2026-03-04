@@ -1,8 +1,13 @@
+import { useCartStore } from "@/src/store/Order/store-order";
+import { Tabs } from "expo-router";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import React from "react";
 
 export default function _layout() {
-  const cookingCount = 2;
+  const cart = useCartStore((state) => state.cart);
+  const myCart = cart.reduce((total, item) => total + item.quantity, 0);
+  const openBadge = myCart.toString();
+
   return (
     <NativeTabs
       backgroundColor="blue"
@@ -18,11 +23,6 @@ export default function _layout() {
           md="home"
         />
       </NativeTabs.Trigger>
-      <NativeTabs.Trigger name="(ranking)">
-        <NativeTabs.Trigger.Label>ranking</NativeTabs.Trigger.Label>
-
-        <NativeTabs.Trigger.Icon sf="star.fill" md="star" />
-      </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="shop">
         <NativeTabs.Trigger.Label>Shop</NativeTabs.Trigger.Label>
@@ -30,17 +30,17 @@ export default function _layout() {
       </NativeTabs.Trigger>
       <NativeTabs.Trigger name="orders">
         <NativeTabs.Trigger.Label>Orders</NativeTabs.Trigger.Label>
+        {/*  my cart */}
 
-        <NativeTabs.Trigger.Badge>
-          {String(cookingCount)}
-        </NativeTabs.Trigger.Badge>
+        {openBadge !== "0" && (
+          <NativeTabs.Trigger.Badge>{openBadge}</NativeTabs.Trigger.Badge>
+        )}
 
         <NativeTabs.Trigger.Icon sf="receipt.fill" md="receipt" />
       </NativeTabs.Trigger>
 
       <NativeTabs.Trigger name="(message)">
         <NativeTabs.Trigger.Label>Message</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Badge>9</NativeTabs.Trigger.Badge>
 
         <NativeTabs.Trigger.Icon sf="message.fill" md="chat" />
       </NativeTabs.Trigger>
@@ -49,6 +49,7 @@ export default function _layout() {
         <NativeTabs.Trigger.Label>Me</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="square.grid.2x2.fill" md="h_mobiledata" />
       </NativeTabs.Trigger>
+      <Tabs.Screen name="(ranking)" />
     </NativeTabs>
   );
 }
