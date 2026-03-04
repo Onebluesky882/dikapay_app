@@ -4,16 +4,7 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { getMeApi } from "../api/otp-email/getMe";
 import { otpEmailApi } from "../api/otp-email/otp-email";
-
-type User = {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-  email: string;
-  emailVerified: boolean;
-  name: string;
-  image?: string | null;
-};
+import { User } from "../types/user.type";
 
 type AuthState = {
   user: User | null;
