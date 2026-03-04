@@ -50,8 +50,8 @@ export default function HomePage() {
         style={{
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
-          paddingTop: 20,
-          marginTop: 20,
+
+          marginTop: 10,
         }}
       >
         {/* BANNER */}
@@ -91,7 +91,7 @@ export default function HomePage() {
         </View>
 
         {/* COUPON SECTION */}
-        <View style={{ marginTop: 24 }}>
+        <View style={{ marginTop: 12 }}>
           <View style={{ paddingHorizontal: 20, marginBottom: 12 }}>
             <Text style={{ fontSize: 22, fontWeight: "700" }}>
               คูปองสำหรับคุณ
@@ -125,7 +125,7 @@ export default function HomePage() {
         </View>
 
         {/* RECOMMENDED SHOPS */}
-        <View style={{ marginTop: 24 }}>
+        <View style={{ marginTop: 12 }}>
           <View style={{ paddingHorizontal: 16, marginBottom: 12 }}>
             <Text style={{ fontSize: 20, fontWeight: "700" }}>
               ร้านค้าแนะนำใกล้คุณ
@@ -183,7 +183,7 @@ export default function HomePage() {
         </View>
 
         {/* MENU SECTION */}
-        <View style={{ paddingHorizontal: 16, marginTop: 24 }}>
+        <View style={{ paddingHorizontal: 16, marginTop: 12 }}>
           <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 16 }}>
             เมนูฮิต ติดกระแสวันนี้
           </Text>
@@ -213,7 +213,7 @@ export default function HomePage() {
                 >
                   {item.name}
                 </Text>
-                <Text style={{ color: "#ea580c", marginTop: 8 }}>
+                <Text style={{ color: "#ea580c", marginTop: 12 }}>
                   {item.price}
                 </Text>
               </TouchableOpacity>
