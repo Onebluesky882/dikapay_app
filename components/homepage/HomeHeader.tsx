@@ -1,5 +1,5 @@
 import { User } from "@/src/types/user.type";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { Pressable, Text, View } from "react-native";
 
 export default function HomeHeader({ user }: { user: User }) {
@@ -7,22 +7,10 @@ export default function HomeHeader({ user }: { user: User }) {
   const points = 120; // mock คะแนน
 
   return (
-    <View
-      style={{
-        marginBottom: -55,
-        backgroundColor: "#ffffff",
-        shadowColor: "#000",
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
-        shadowOffset: { width: 0, height: 4 },
-        elevation: 5,
-      }}
-      className="mx-4 my-4 py-6 px-4 rounded-2xl"
-    >
+    <View className=" px-4   bg-[#a0ff8c] py-4">
       {/* Top Row */}
       <View className="flex-row justify-between items-center">
         <View>
-        
           <Text style={{ fontSize: 12 }}>Welcome</Text>
           <Text
             style={{
@@ -35,23 +23,15 @@ export default function HomeHeader({ user }: { user: User }) {
           </Text>
         </View>
 
-        <Pressable
-          style={({ pressed }) => ({
-            backgroundColor: pressed ? "#111" : "#000",
-            paddingVertical: 12,
-            paddingHorizontal: 18,
-            borderRadius: 14,
-          })}
-        >
-          <Text style={{ color: "#fff", fontWeight: "600" }}>สแกน QR</Text>
+        <Pressable className="  border-2">
+          <MaterialIcons name="qr-code-scanner" size={24} color="black" />
         </Pressable>
       </View>
 
       {/* Section คะแนนสะสม */}
       <View
+        className=" mt-4 shadow-md border border-gray-100 bg-white p-8"
         style={{
-          marginTop: 20,
-          backgroundColor: "#F1F5F9",
           padding: 16,
           borderRadius: 16,
           flexDirection: "row",
@@ -60,7 +40,12 @@ export default function HomeHeader({ user }: { user: User }) {
         }}
       >
         {/* Left: Icon + Text */}
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
           <View
             style={{
               backgroundColor: "#FFE8B6",

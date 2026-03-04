@@ -21,106 +21,117 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width } = Dimensions.get("window");
 
-const handleShopRouter = (id: string) => {
-  router.push(`/shop/${id}`);
-};
-
 export default function HomePage() {
   const SPACING = 12;
   const ITEM_WIDTH = width - SPACING * 2;
 
   const user = useAuthStore((state) => state.user);
+  if (!user) return null;
 
-  if (!user) {
-    return null;
-  }
+  const handleShopRouter = (id: string) => {
+    router.push(`/shop/${id}`);
+  };
 
   return (
-    <ScrollView className="">
+    <ScrollView showsVerticalScrollIndicator={false}>
+      {/* a0ff8c */}
       <SafeAreaView
         style={{
-          backgroundColor: "#caffbf",
-          marginBottom: 8,
+          backgroundColor: "#a0ff8c",
+          paddingBottom: -100,
+          marginTop: -80,
         }}
       >
+        {/* HEADER */}
         <HomeHeader user={user} />
       </SafeAreaView>
-
-      {/* 🔥 Banner */}
-      <View style={{ paddingHorizontal: 2, paddingLeft: 8 }}>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          snapToInterval={ITEM_WIDTH + 8} // 👈 ต้องรวม marginRight
-          snapToAlignment="start"
-          decelerationRate="fast"
-        >
-          {banners.map((item) => (
-            <View
-              key={item.id}
-              style={{
-                width: ITEM_WIDTH,
-                height: 180,
-                marginRight: 8,
-              }}
-            >
+      {/* WHITE CONTENT CONTAINER */}
+      <View
+        style={{
+          borderTopLeftRadius: 30,
+          borderTopRightRadius: 30,
+          paddingTop: 20,
+          marginTop: 20,
+        }}
+      >
+        {/* BANNER */}
+        <View style={{ paddingLeft: 8 }}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            snapToInterval={ITEM_WIDTH + 8}
+            snapToAlignment="start"
+            decelerationRate="fast"
+          >
+            {banners.map((item) => (
               <View
+                key={item.id}
                 style={{
-                  flex: 1,
-                  borderRadius: 16,
-                  overflow: "hidden",
+                  width: ITEM_WIDTH,
+                  height: 180,
+                  marginRight: 8,
                 }}
               >
-                <Image
-                  source={{ uri: item.image }}
-                  style={{ width: "100%", height: "100%" }}
-                  resizeMode="cover"
-                />
+                <View
+                  style={{
+                    flex: 1,
+                    borderRadius: 16,
+                    overflow: "hidden",
+                  }}
+                >
+                  <Image
+                    source={{ uri: item.image }}
+                    style={{ width: "100%", height: "100%" }}
+                    resizeMode="cover"
+                  />
+                </View>
               </View>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-      <View className="mt-6">
-        <View className="px-5 mb-3">
-          <Text className="text-2xl font-bold text-gray-900">
-            คูปองสำหรับคุณ
-          </Text>
+            ))}
+          </ScrollView>
         </View>
 
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 16 }}
-        >
-          {promotions.map((item) => (
-            <View
-              key={item.id}
-              style={{
-                height: 30,
-                paddingHorizontal: 18,
-                borderRadius: 50,
-                marginRight: 12,
-                justifyContent: "center",
-                backgroundColor: "#16a34a",
+        {/* COUPON SECTION */}
+        <View style={{ marginTop: 24 }}>
+          <View style={{ paddingHorizontal: 20, marginBottom: 12 }}>
+            <Text style={{ fontSize: 22, fontWeight: "700" }}>
+              คูปองสำหรับคุณ
+            </Text>
+          </View>
 
-                shadowOffset: { width: 0, height: 3 },
-                elevation: 4,
-              }}
-            >
-              <Text className="text-white text-sm font-semibold">
-                {item.title}
-              </Text>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-
-      <View className="mt-2    pb-2">
-        <View className="px-4 mb-2">
-          <Text className="text-xl font-bold">ร้านค้าแนะนำใกล้คุณ</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ paddingHorizontal: 16 }}
+          >
+            {promotions.map((item) => (
+              <View
+                key={item.id}
+                style={{
+                  height: 34,
+                  paddingHorizontal: 18,
+                  borderRadius: 50,
+                  marginRight: 12,
+                  justifyContent: "center",
+                  backgroundColor: "#16a34a",
+                  elevation: 3,
+                }}
+              >
+                <Text style={{ color: "#fff", fontWeight: "600" }}>
+                  {item.title}
+                </Text>
+              </View>
+            ))}
+          </ScrollView>
         </View>
-        <View>
+
+        {/* RECOMMENDED SHOPS */}
+        <View style={{ marginTop: 24 }}>
+          <View style={{ paddingHorizontal: 16, marginBottom: 12 }}>
+            <Text style={{ fontSize: 20, fontWeight: "700" }}>
+              ร้านค้าแนะนำใกล้คุณ
+            </Text>
+          </View>
+
           <FlatList
             data={recommendedShops}
             horizontal
@@ -128,34 +139,41 @@ export default function HomePage() {
             keyExtractor={(item) => item.id}
             contentContainerStyle={{
               paddingHorizontal: 12,
-              paddingVertical: 1,
             }}
             renderItem={({ item }) => (
               <TouchableOpacity
-                className="bg-white rounded-2xl mr-4 shadow"
-                style={{ width: 220 }}
-                onPress={() => handleShopRouter(item.id as unknown as string)}
+                style={{
+                  backgroundColor: "#fff",
+                  borderRadius: 16,
+                  marginRight: 16,
+                  width: 220,
+                  elevation: 3,
+                }}
+                onPress={() => handleShopRouter(item.id)}
               >
-                {/* รูปภาพ */}
-                <View className="h-32 rounded-t-2xl  overflow-hidden   ">
+                <View
+                  style={{
+                    height: 130,
+                    borderTopLeftRadius: 16,
+                    borderTopRightRadius: 16,
+                    overflow: "hidden",
+                  }}
+                >
                   <Image
                     source={{ uri: item.image }}
-                    className="w-full h-full"
+                    style={{ width: "100%", height: "100%" }}
                     resizeMode="cover"
                   />
                 </View>
 
-                {/* ข้อมูลร้าน */}
-                <View className="p-3">
-                  <Text className="font-semibold text-base text-gray-900">
+                <View style={{ padding: 12 }}>
+                  <Text style={{ fontWeight: "600", fontSize: 16 }}>
                     {item.name}
                   </Text>
-
-                  <Text className="text-gray-500 text-sm mt-1">
+                  <Text style={{ color: "#6b7280", marginTop: 4 }}>
                     {item.category}
                   </Text>
-
-                  <Text className="text-amber-500 text-sm mt-2">
+                  <Text style={{ color: "#f59e0b", marginTop: 6 }}>
                     ⭐ {item.rating}
                   </Text>
                 </View>
@@ -163,39 +181,71 @@ export default function HomePage() {
             )}
           />
         </View>
-      </View>
 
-      {/* 🍜 Menu Section */}
-      <View className="px-4 ">
-        <Text className="text-xl font-bold mb-4">เมนูฮิต ติดกระแสวันนี้</Text>
+        {/* MENU SECTION */}
+        <View style={{ paddingHorizontal: 16, marginTop: 24 }}>
+          <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 16 }}>
+            เมนูฮิต ติดกระแสวันนี้
+          </Text>
 
-        <FlatList
-          data={menus}
-          numColumns={2}
-          scrollEnabled={false}
-          keyExtractor={(item) => item.id}
-          columnWrapperStyle={{ justifyContent: "space-between" }}
-          renderItem={({ item }) => (
-            <TouchableOpacity className="bg-orange-50 rounded-2xl p-4 mb-4 w-[48%]">
-              <Text className="text-lg font-semibold text-amber-900">
-                {item.name}
+          <FlatList
+            data={menus}
+            numColumns={2}
+            scrollEnabled={false}
+            keyExtractor={(item) => item.id}
+            columnWrapperStyle={{ justifyContent: "space-between" }}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#fff7ed",
+                  borderRadius: 16,
+                  padding: 16,
+                  marginBottom: 16,
+                  width: "48%",
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "600",
+                    color: "#92400e",
+                  }}
+                >
+                  {item.name}
+                </Text>
+                <Text style={{ color: "#ea580c", marginTop: 8 }}>
+                  {item.price}
+                </Text>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+
+        {/* PROMOTION SECTION */}
+        <View style={{ paddingHorizontal: 16, marginTop: 18 }}>
+          <Text style={{ fontSize: 20, fontWeight: "700", marginBottom: 16 }}>
+            โปรโมชั่น
+          </Text>
+
+          {promotions.map((item) => (
+            <View
+              key={item.id}
+              style={{
+                backgroundColor: "#fef3c7",
+                padding: 16,
+                borderRadius: 16,
+                marginBottom: 12,
+              }}
+            >
+              <Text style={{ fontWeight: "600", color: "#92400e" }}>
+                {item.title}
               </Text>
-              <Text className="text-orange-600 mt-2">{item.price}</Text>
-            </TouchableOpacity>
-          )}
-        />
-      </View>
-
-      {/* 🎉 Promotion Section */}
-      <View className="px-4 mt-4 mb-10">
-        <Text className="text-xl font-bold mb-4">โปรโมชั่น</Text>
-
-        {promotions.map((item) => (
-          <View key={item.id} className="bg-amber-100 p-4 rounded-2xl mb-3">
-            <Text className="font-semibold text-amber-900">{item.title}</Text>
-            <Text className="text-amber-700 mt-1">{item.desc}</Text>
-          </View>
-        ))}
+              <Text style={{ marginTop: 6, color: "#78350f" }}>
+                {item.desc}
+              </Text>
+            </View>
+          ))}
+        </View>
       </View>
     </ScrollView>
   );
