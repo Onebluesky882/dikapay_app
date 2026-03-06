@@ -8,6 +8,9 @@
     "scheme": "dikapay",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "router": {
+      "appRoot": "src/app"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wansing05.dikapay"

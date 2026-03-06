@@ -6,8 +6,7 @@ export default function HomeHeader({ user }: { user: User }) {
   const displayName = user.name || "guest";
 
   return (
-    <View className=" px-4   bg-[#a0ff8c] py-4">
-      {/* Top Row */}
+    <View className=" px-4   bg-bg-[#a0ff8c] py-4">
       <View className="flex-row justify-between items-center">
         <View>
           <Text style={{ fontSize: 12 }}>Welcome</Text>

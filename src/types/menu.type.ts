@@ -5,6 +5,7 @@ export type Menu = {
   category: string;
   menuAvailable: boolean;
   tables: Table[];
+  shopId?: string;
 };
 type Option = {
   optionAvailable: boolean;
@@ -15,8 +16,10 @@ type Option = {
   amount: number;
 };
 
-export type MenuOption = Menu & {
+export type Cart = Menu & {
+  quantity: number;
   options?: Option[];
+  total: number;
 };
 export type Table = {
   id: string;
