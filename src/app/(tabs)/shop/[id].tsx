@@ -1,5 +1,5 @@
 import { shops } from "@/src/mocks/shop.mock";
-import { useCartStore } from "@/src/store/Order/store-order";
+import { useCartStore } from "@/src/store/Cart/store-order";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useLocalSearchParams } from "expo-router";
 import React from "react";
@@ -13,15 +13,9 @@ export default function Shop() {
   const matchShop = shops.find((shop) => shop.id == id);
   if (!matchShop) return null;
 
-  const totalQty = cart.reduce((t, i) => t + i.quantity, 0);
-  const totalPrice = cart.reduce((t, i) => {
-    const menu = matchShop.menus.find((m) => m.id === i.menuId);
-    return t + (menu?.price ?? 0) * i.quantity;
-  }, 0);
-
   console.log("cart", cart);
   return (
-    <View style={{ flex: 1, padding: 16 }}>
+    <View className="relative" style={{ flex: 1, padding: 16 }}>
       {/* Header ร้าน */}
       <View style={{ marginBottom: 20 }}>
         <Text style={{ fontSize: 22, fontWeight: "bold" }}>
@@ -100,30 +94,6 @@ export default function Shop() {
           );
         }}
       />
-
-      {/* Bottom Cart Bar */}
-      {totalQty > 0 && (
-        <View
-          style={{
-            position: "absolute",
-            bottom: 0,
-            left: 0,
-            right: 0,
-            backgroundColor: "#2563eb",
-            padding: 16,
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "white", fontWeight: "bold" }}>
-            {totalQty} รายการพิเศษ
-          </Text>
-          <Text style={{ color: "white", fontWeight: "bold" }}>
-            ฿{totalPrice}
-          </Text>
-        </View>
-      )}
     </View>
   );
 }

@@ -1,19 +1,25 @@
-import { useCartStore } from "@/src/store/Order/store-order";
-import { Tabs } from "expo-router";
+import { useCartStore } from "@/src/store/Cart/store-order";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import React from "react";
-
+import { DynamicColorIOS } from "react-native";
 export default function _layout() {
   const cart = useCartStore((state) => state.cart);
-  const myCart = cart.reduce((total, item) => total + item.quantity, 0);
-  const openBadge = myCart.toString();
-
+  const openBadge = cart.length.toString();
   return (
     <NativeTabs
       backgroundColor="blue"
       labelStyle={{
-        default: { color: "blue" },
+        // For the text color
+        color: DynamicColorIOS({
+          dark: "white",
+          light: "green",
+        }),
       }}
+      // For the selected icon color
+      tintColor={DynamicColorIOS({
+        dark: "white",
+        light: "green",
+      })}
     >
       <NativeTabs.Trigger name="(home)" disableScrollToTop>
         <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
@@ -49,7 +55,6 @@ export default function _layout() {
         <NativeTabs.Trigger.Label>Me</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf="square.grid.2x2.fill" md="h_mobiledata" />
       </NativeTabs.Trigger>
-      <Tabs.Screen name="(ranking)" />
     </NativeTabs>
   );
 }

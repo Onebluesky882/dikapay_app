@@ -44,24 +44,21 @@ export const useCartStore = create<CartState>()(
         }
       },
 
-      minusCartItem: (menuId, optionId) => {
+      minusCartItem: (menuId) => {
         const cart = get().cart;
-        const existingItem = cart.find(
-          (item) => item.menuId === menuId && item.optionId === optionId,
-        );
+
+        const existingItem = cart.find((item) => item.menuId === menuId);
 
         if (!existingItem) return;
 
         if (existingItem.quantity === 1) {
           set({
-            cart: cart.filter(
-              (item) => !(item.menuId === menuId && item.optionId === optionId),
-            ),
+            cart: cart.filter((item) => item.menuId !== menuId),
           });
         } else {
           set({
             cart: cart.map((item) =>
-              item.menuId === menuId && item.optionId === optionId
+              item.menuId === menuId
                 ? { ...item, quantity: item.quantity - 1 }
                 : item,
             ),

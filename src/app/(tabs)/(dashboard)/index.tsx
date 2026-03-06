@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useAuthStore } from "../../../src/store/auth-store";
+import { useAuthStore } from "../../../store/auth-store";
 
 export default function User() {
   const logout = useAuthStore((state) => state.logout);

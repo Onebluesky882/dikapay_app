@@ -12,7 +12,7 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import "../global.css";
+import "@/global.css";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -22,16 +22,16 @@ export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
 
   useFonts({
-    SarabunRegular: require("../assets/fonts/sarabun/Sarabun-Regular.ttf"),
-    SarabunMedium: require("../assets/fonts/sarabun/Sarabun-Medium.ttf"),
-    SarabunSemiBold: require("../assets/fonts/sarabun/Sarabun-SemiBold.ttf"),
-    SarabunBold: require("../assets/fonts/sarabun/Sarabun-Bold.ttf"),
+    SarabunRegular: require("@/assets/fonts/sarabun/Sarabun-Regular.ttf"),
+    SarabunMedium: require("@/assets/fonts/sarabun/Sarabun-Medium.ttf"),
+    SarabunSemiBold: require("@/assets/fonts/sarabun/Sarabun-SemiBold.ttf"),
+    SarabunBold: require("@/assets/fonts/sarabun/Sarabun-Bold.ttf"),
 
-    SFProRegular: require("../assets/fonts/sfpro/SF-Pro-Text-Regular.otf"),
-    SFProMedium: require("../assets/fonts/sfpro/SF-Pro-Text-Medium.otf"),
-    SFProSemiBold: require("../assets/fonts/sfpro/SF-Pro-Text-Semibold.otf"),
-    SFProBold: require("../assets/fonts/sfpro/SF-Pro-Text-Bold.otf"),
-    SFProBlack: require("../assets/fonts/sfpro/SF-Pro-Text-Black.otf"),
+    SFProRegular: require("@/assets/fonts/sfpro/SF-Pro-Text-Regular.otf"),
+    SFProMedium: require("@/assets/fonts/sfpro/SF-Pro-Text-Medium.otf"),
+    SFProSemiBold: require("@/assets/fonts/sfpro/SF-Pro-Text-Semibold.otf"),
+    SFProBold: require("@/assets/fonts/sfpro/SF-Pro-Text-Bold.otf"),
+    SFProBlack: require("@/assets/fonts/sfpro/SF-Pro-Text-Black.otf"),
   });
 
   useEffect(() => {
