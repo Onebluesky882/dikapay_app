@@ -8,9 +8,23 @@ export const shops = [
     menus: [
       {
         id: "m1",
-        name: "ข้าวผัดไก่",
+        name: "ข้าวผัด",
         price: 40,
         category: "อาหารจานเดียว",
+        options: [
+          {
+            id: "หมู",
+            name: "ระดับความเผ็ด",
+            size: "ไม่เผ็ด",
+            extraPrice: 0,
+          },
+          {
+            id: "เนื้อ",
+            name: "ระดับความเผ็ด",
+            size: "เผ็ดมาก",
+            extraPrice: 10,
+          },
+        ],
       },
       {
         id: "m2",
@@ -29,14 +43,12 @@ export const shops = [
             name: "ระดับความเผ็ด",
             size: "ไม่เผ็ด",
             extraPrice: 0,
-            amount: 1,
           },
           {
             id: "spicy2",
             name: "ระดับความเผ็ด",
             size: "เผ็ดมาก",
             extraPrice: 0,
-            amount: 1,
           },
         ],
       },
@@ -51,7 +63,6 @@ export const shops = [
             name: "เพิ่มไข่",
             size: "ไข่ดาว",
             extraPrice: 10,
-            amount: 1,
           },
         ],
       },
@@ -66,14 +77,12 @@ export const shops = [
             name: "ขนาดแก้ว",
             size: "Small",
             extraPrice: 0,
-            amount: 1,
           },
           {
             id: "size_l",
             name: "ขนาดแก้ว",
             size: "Large",
             extraPrice: 10,
-            amount: 1,
           },
         ],
       },

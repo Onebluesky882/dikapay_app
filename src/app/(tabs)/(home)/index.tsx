@@ -1,10 +1,10 @@
-import Banner from "@/components/homepage/Bannner";
-import { CouponCard } from "@/components/homepage/CouponCard";
-import HomeHeader from "@/components/homepage/HomeHeader";
-import MenuIcon from "@/components/homepage/MenuIcon";
-import { MenuSuggestion } from "@/components/homepage/MenuSuggestion";
-import Promotion from "@/components/homepage/Promotion";
-import { RecommendedCard } from "@/components/homepage/RecommendCard";
+import Banner from "@/src/components/homepage/Bannner";
+import { CouponCard } from "@/src/components/homepage/CouponCard";
+import HomeHeader from "@/src/components/homepage/HomeHeader";
+import MenuIcon from "@/src/components/homepage/MenuIcon";
+import { MenuSuggestion } from "@/src/components/homepage/MenuSuggestion";
+import Promotion from "@/src/components/homepage/Promotion";
+import { RecommendedCard } from "@/src/components/homepage/RecommendCard";
 import { useAuthStore } from "@/src/store/auth-store";
 import { router } from "expo-router";
 import React from "react";

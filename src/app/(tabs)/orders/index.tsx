@@ -1,11 +1,13 @@
-import { CartList } from "@/components/cart/Cart";
+import { CartList } from "@/src/components/cart/Cart";
+import { RemoveCart } from "@/src/components/cart/RemoveCart";
 import { useCartStore } from "@/src/store/Cart/store-order";
+import { useShop } from "@/src/store/shop/shop-id";
 import { Cart } from "@/src/types/menu.type";
 import { mergeCart } from "@/src/utils/cart-utils";
 import { getMenuById } from "@/src/utils/getMenuId";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -13,6 +15,10 @@ export default function CartPage() {
   const cart = useCartStore((state) => state.cart);
   const addItem = useCartStore((state) => state.addCartItem);
   const removeItem = useCartStore((state) => state.minusCartItem);
+  const clearCart = useCartStore((state) => state.clearCart);
+  const shopId = useShop((state) => state.shopId);
+
+  // todo handle if got order can't change shop
 
   const cartItems: Cart[] = mergeCart(cart)
     .map((item) => {
@@ -28,19 +34,42 @@ export default function CartPage() {
 
   const totalPrice = cartItems.reduce((total, item) => total + item.total, 0);
 
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const handleClearCart = () => {
+    clearCart();
+    setConfirmDelete(false);
+    router.push("/(tabs)/shop");
+  };
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}>
+    <SafeAreaView
+      style={{
+        backgroundColor: "white",
+        position: "relative",
+        flex: 1,
+      }}
+    >
       {/* --- Header --- */}
-      <View className="flex-row items-center justify-between px-4 py-3 bg-white border-b border-gray-100">
+      <View className="  flex-row items-center justify-between px-4 py-3 bg-white border-b border-gray-100">
         <View className="flex-row items-center">
-          <Pressable className="mr-3" onPress={() => router.back()}>
+          <Pressable
+            className="mr-3"
+            onPress={() => router.push(`/shop/${shopId}`)}
+          >
             <Ionicons name="arrow-back" size={24} color="black" />
           </Pressable>
           <Text className="text-lg font-bold text-gray-900">ตะกร้าของคุณ</Text>
         </View>
-        <Text className="text-gray-500 font-medium">
-          {cartItems.length} รายการ
-        </Text>
+        <View className="items-center flex-row gap-4">
+          <Text className="text-gray-500 font-medium">
+            {cartItems.length} รายการ
+          </Text>
+          {cartItems.length > 0 && (
+            <Pressable onPress={() => setConfirmDelete(true)}>
+              <Ionicons name="trash-bin" size={24} color="red" />
+            </Pressable>
+          )}
+        </View>
       </View>
 
       {/* --- Cart Items List --- */}
@@ -90,6 +119,12 @@ export default function CartPage() {
             </View>
           </Pressable>
         </View>
+      )}
+      {confirmDelete && (
+        <RemoveCart
+          handleClearCart={handleClearCart}
+          setConfirmDelete={setConfirmDelete}
+        />
       )}
     </SafeAreaView>
   );
