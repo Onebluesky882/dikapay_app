@@ -1,6 +1,4 @@
-import {
-  uploadImage,
-} from "@/src/api/attach-image/presigned-url";
+import { uploadImage } from "@/src/api/attach-image/presigned-url";
 import Banner from "@/src/components/homepage/Bannner";
 import { CouponCard } from "@/src/components/homepage/CouponCard";
 import HomeHeader from "@/src/components/homepage/HomeHeader";
@@ -27,7 +25,7 @@ export default function HomePage() {
     if (!image) return;
 
     const body: PresignedUrlDto = {
-      imageType: "shop",
+      imageType: "slip",
       userId,
       mimeType: getMimeType(image),
     };
@@ -40,7 +38,7 @@ export default function HomePage() {
     const data = await uploadImage.clientUpload({
       presignedUrl: res.data.path,
       blob,
-      mimeType : body.mimeType,
+      mimeType: body.mimeType,
       userId,
     });
 
