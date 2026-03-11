@@ -1,9 +1,5 @@
 import axios from "axios";
 
-console.log(
-  "process.env.EXPO_PUBLIC_UPLOAD_IMAGE  :",
-  process.env.EXPO_PUBLIC_UPLOAD_IMAGE,
-);
 if (!process.env.EXPO_PUBLIC_UPLOAD_IMAGE && !process.env.EXPO_PUBLIC_AUTH) {
   throw new Error("No API URL defined");
 }
