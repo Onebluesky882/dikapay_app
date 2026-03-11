@@ -1,5 +1,4 @@
 import {
-  PresignedUrlDto,
   uploadImage,
 } from "@/src/api/attach-image/presigned-url";
 import Banner from "@/src/components/homepage/Bannner";
@@ -12,6 +11,7 @@ import { RecommendedCard } from "@/src/components/homepage/RecommendCard";
 import { UploadImage } from "@/src/components/upload-image";
 import { usePickImage } from "@/src/hooks/usePickImage/usePickImage";
 import { useAuthStore } from "@/src/store/auth-store";
+import { PresignedUrlDto } from "@/src/types/upload-image.type";
 import { getMimeType } from "@/src/utils/getMimeImageType";
 import { router } from "expo-router";
 import React from "react";
@@ -37,12 +37,12 @@ export default function HomePage() {
     const file = await fetch(image);
     const blob = await file.blob();
 
-    const data = await uploadImage.clientUpload(
-      res.data.path,
+    const data = await uploadImage.clientUpload({
+      presignedUrl: res.data.path,
       blob,
+      mimeType : body.mimeType,
       userId,
-      body.mimeType,
-    );
+    });
 
     if (data) {
       clearImage();
@@ -81,7 +81,13 @@ export default function HomePage() {
         }}
       >
         <View>
-          <UploadImage handleCloseImage={handleCloseImage} handleSubmitPresigned={handleSubmitPresigned} image={image} loading={ loading} pickImage={pickImage} />
+          <UploadImage
+            handleCloseImage={handleCloseImage}
+            handleSubmitPresigned={handleSubmitPresigned}
+            image={image}
+            loading={loading}
+            pickImage={pickImage}
+          />
         </View>
         {/* BANNER */}
         <Banner />
