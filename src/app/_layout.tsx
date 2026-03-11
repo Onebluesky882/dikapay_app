@@ -1,4 +1,5 @@
-import { useColorScheme } from "@/hooks/use-color-scheme";
+import "@/global.css";
+import { useColorScheme } from "@/src/hooks/use-color-scheme";
 import { useAuthStore } from "@/src/store/auth-store";
 import {
   DarkTheme,
@@ -12,7 +13,6 @@ import React, { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import "@/global.css";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();

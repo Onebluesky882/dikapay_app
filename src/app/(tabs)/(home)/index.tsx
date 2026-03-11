@@ -1,11 +1,18 @@
-import Banner from "@/components/homepage/Bannner";
-import { CouponCard } from "@/components/homepage/CouponCard";
-import HomeHeader from "@/components/homepage/HomeHeader";
-import MenuIcon from "@/components/homepage/MenuIcon";
-import { MenuSuggestion } from "@/components/homepage/MenuSuggestion";
-import Promotion from "@/components/homepage/Promotion";
-import { RecommendedCard } from "@/components/homepage/RecommendCard";
+import {
+  PresignedUrlDto,
+  uploadImage,
+} from "@/src/api/attach-image/presigned-url";
+import Banner from "@/src/components/homepage/Bannner";
+import { CouponCard } from "@/src/components/homepage/CouponCard";
+import HomeHeader from "@/src/components/homepage/HomeHeader";
+import MenuIcon from "@/src/components/homepage/MenuIcon";
+import { MenuSuggestion } from "@/src/components/homepage/MenuSuggestion";
+import Promotion from "@/src/components/homepage/Promotion";
+import { RecommendedCard } from "@/src/components/homepage/RecommendCard";
+import { UploadImage } from "@/src/components/upload-image";
+import { usePickImage } from "@/src/hooks/usePickImage/usePickImage";
 import { useAuthStore } from "@/src/store/auth-store";
+import { getMimeType } from "@/src/utils/getMimeImageType";
 import { router } from "expo-router";
 import React from "react";
 import { ScrollView, View } from "react-native";
@@ -13,11 +20,44 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomePage() {
   const user = useAuthStore((state) => state.user);
-  if (!user) return null;
+  const { image, loading, pickImage, clearImage } = usePickImage();
+  const userId = String(user?.id);
+
+  const handleSubmitPresigned = async () => {
+    if (!image) return;
+
+    const body: PresignedUrlDto = {
+      imageType: "shop",
+      userId,
+      mimeType: getMimeType(image),
+    };
+
+    const res = await uploadImage.presignedUrl(body);
+
+    const file = await fetch(image);
+    const blob = await file.blob();
+
+    const data = await uploadImage.clientUpload(
+      res.data.path,
+      blob,
+      userId,
+      body.mimeType,
+    );
+
+    if (data) {
+      clearImage();
+    }
+  };
+
+  const handleCloseImage = () => {
+    clearImage();
+  };
 
   const handleShopRouter = (id: string) => {
     router.push(`/shop/${id}`);
   };
+
+  if (!user) return null;
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -40,6 +80,9 @@ export default function HomePage() {
           marginTop: 10,
         }}
       >
+        <View>
+          <UploadImage handleCloseImage={handleCloseImage} handleSubmitPresigned={handleSubmitPresigned} image={image} loading={ loading} pickImage={pickImage} />
+        </View>
         {/* BANNER */}
         <Banner />
 
