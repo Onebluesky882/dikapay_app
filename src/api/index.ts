@@ -1,21 +1,22 @@
 import axios from "axios";
 
-const baseURL = process.env.EXPO_PUBLIC_API_URL;
-const authURL = process.env.EXPO_PUBLIC_AUTH;
-
-if (!baseURL) {
+console.log(
+  "process.env.EXPO_PUBLIC_UPLOAD_IMAGE  :",
+  process.env.EXPO_PUBLIC_UPLOAD_IMAGE,
+);
+if (!process.env.EXPO_PUBLIC_UPLOAD_IMAGE && !process.env.EXPO_PUBLIC_AUTH) {
   throw new Error("No API URL defined");
 }
 
-export const api = axios.create({
-  baseURL: baseURL,
+export const uploadImageApi = axios.create({
+  baseURL: process.env.EXPO_PUBLIC_UPLOAD_IMAGE,
   headers: {
     "Content-Type": "application/json",
   },
 });
 
 export const authApi = axios.create({
-  baseURL: authURL,
+  baseURL: process.env.EXPO_PUBLIC_AUTH,
   headers: {
     "Content-Type": "application/json",
   },

@@ -8,6 +8,7 @@
     "scheme": "dikapay",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+
     "router": {
       "appRoot": "src/app"
     },
@@ -47,7 +48,8 @@
       "expo-font",
       "expo-image",
       "expo-secure-store",
-      "expo-web-browser"
+      "expo-web-browser",
+      "expo-image-picker"
     ],
     "experiments": {
       "typedRoutes": true,

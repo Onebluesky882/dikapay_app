@@ -1,5 +1,5 @@
-import { api, authApi } from "..";
+import { authApi } from "..";
 
 export const getMeApi = {
-  getMe: (email: string) => authApi.post("/api/me", {email}),
+  getMe: (email: string) => authApi.post("/api/me", { email }),
 };

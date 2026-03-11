@@ -5,6 +5,7 @@ import MenuIcon from "@/src/components/homepage/MenuIcon";
 import { MenuSuggestion } from "@/src/components/homepage/MenuSuggestion";
 import Promotion from "@/src/components/homepage/Promotion";
 import { RecommendedCard } from "@/src/components/homepage/RecommendCard";
+import UploadImage from "@/src/components/upload-image";
 import { useAuthStore } from "@/src/store/auth-store";
 import { router } from "expo-router";
 import React from "react";
@@ -40,6 +41,9 @@ export default function HomePage() {
           marginTop: 10,
         }}
       >
+        <View>
+          <UploadImage />
+        </View>
         {/* BANNER */}
         <Banner />
 
