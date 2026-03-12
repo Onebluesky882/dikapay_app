@@ -6,6 +6,7 @@ import { uploadImageApi } from "..";
 
 export const uploadImage = {
   presignedUrl: (body: PresignedUrlDto) => {
+    // fira
     return uploadImageApi.post("/api/upload", body);
   },
 
@@ -21,8 +22,23 @@ export const uploadImage = {
     if (!res.ok) {
       throw new Error("Upload failed");
     }
+
+    // anathoer api to record image detail
+
     return {
       success: true,
     };
   },
+  // todo
+  saveImage: (body: SaveImageDto) => {
+    return uploadImageApi.post("/api/image", body);
+  },
+
+  // get Images all
+  // get image by id and shop id
+  // get image by id and profile id
+  // get image by id and user id
+};
+type SaveImageDto = {
+  id: string;
 };

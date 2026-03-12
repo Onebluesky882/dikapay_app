@@ -28,10 +28,15 @@ export default function Shop() {
     ...new Set(matchShop.menus.map((m) => m.category)),
   ];
 
-  const filteredMenus = useMemo(() => {
-    if (selectedCategory === "ทั้งหมด") return matchShop.menus;
-    return matchShop.menus.filter((m) => m.category === selectedCategory);
-  }, [selectedCategory, matchShop]);
+  let filteredMenus;
+
+  if (selectedCategory === "ทั้งหมด") {
+    filteredMenus = matchShop.menus;
+  } else {
+    filteredMenus = matchShop.menus.filter(
+      (m) => m.category === selectedCategory,
+    );
+  }
 
   return (
     <SafeAreaView style={{ backgroundColor: "white" }}>
