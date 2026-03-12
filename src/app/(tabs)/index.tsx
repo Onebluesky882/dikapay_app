@@ -1,10 +1,11 @@
 import { useAuthStore } from "@/src/store/auth-store";
 import { Ionicons } from "@expo/vector-icons";
+import { Button } from "@react-navigation/elements";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function homepage() {
+export default function Homepage() {
   const menu = [
     { id: "1", icon: "heart", name: "ขนม" },
     { id: "2", icon: "heart", name: "อาหาร" },
@@ -14,7 +15,7 @@ export default function homepage() {
     { id: "6", icon: "heart", name: "สะดวกซื้อ" },
   ];
   const user = useAuthStore((state) => state.user);
-  console.log("user :", user);
+
   return (
     <SafeAreaView className="flex-1 bg-gray-50">
       <View className="px-4 pt-4 gap-4">
@@ -60,7 +61,18 @@ const ActionButton = ({ icon, label }: { icon: any; label: string }) => {
       <View className="bg-white/20 p-3 rounded-full">
         <Ionicons name={icon} size={20} color="white" />
       </View>
+      <Hello />
       <Text className="text-white text-xs mt-2">{label}</Text>
     </Pressable>
+  );
+};
+const Hello = () => {
+  const first = "hello";
+  return (
+    <>
+      <View>
+        <Text>hello</Text>
+      </View>
+    </>
   );
 };
