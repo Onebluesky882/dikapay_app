@@ -2,7 +2,7 @@ import { shops } from "@/src/mocks/shop.mock";
 import { useCartStore } from "@/src/store/Cart/store-order";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { FlatList, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 

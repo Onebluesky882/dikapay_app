@@ -1,6 +1,6 @@
 import { useAuthStore } from "@/src/store/auth-store";
 import { Ionicons } from "@expo/vector-icons";
-import { Button } from "@react-navigation/elements";
+
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";

@@ -6,7 +6,6 @@ import { uploadImageApi } from "..";
 
 export const uploadImage = {
   presignedUrl: (body: PresignedUrlDto) => {
-    // fira
     return uploadImageApi.post("/api/upload", body);
   },
 
