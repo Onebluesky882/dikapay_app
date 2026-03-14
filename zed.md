@@ -1,6 +1,9 @@
 "Cmd-Shift-E" : Project Panel (Files):toggles the project panel focus.
 "Ctrl-Tab" : Next/Previous Item (Tabs):
 
+// zed
+"cmd `" : open each windows
+
 // panae
 "ctrl-w a" : pane
 " ^ - ": go back
@@ -11,13 +14,7 @@
 
 "^ tab" : list tab
 
-
-// git 
-"cmd ctrl y" : state all 
+// git
+"cmd ctrl-y" : state all
 "cmd enter" : commit enter
 "cmd shift-k: : git push
-
-
-
-
-

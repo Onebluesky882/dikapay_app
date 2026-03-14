@@ -1,11 +1,10 @@
-import { ImageManipulator, SaveFormat } from "expo-image-manipulator";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
+import { ImageCompressor } from "@corasan/image-compressor";
 
 export const usePickImage = () => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<string | null>(null);
-  const [closeImage, setCloseImage] = useState(false);
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -15,36 +14,40 @@ export const usePickImage = () => {
 
     if (result.canceled) return;
 
+    const asset = result.assets?.[0];
+    if (!asset) return;
+
     try {
       setLoading(true);
 
-      const uri = result.assets[0].uri;
-
-      const rendered = await ImageManipulator.manipulate(uri)
-        .resize({ height: 920 })
-        .renderAsync();
-
-      const compressed = await rendered.saveAsync({
-        compress: 0.8,
-        format: SaveFormat.JPEG,
-      });
+      const compressed = ImageCompressor.compress(
+        {
+          uri: asset.uri,
+          width: asset.width,
+          height: asset.height,
+          fileSize: asset.fileSize ?? 0,
+        },
+        {
+          quality: 80,
+          maxHeight: 920,
+        },
+      );
 
       setImage(compressed.uri);
-      setCloseImage(false);
+    } catch (error) {
+      console.error("Image compression failed", error);
     } finally {
       setLoading(false);
     }
   };
+
   const clearImage = () => {
     setImage(null);
-    setCloseImage(false);
   };
 
   return {
     loading,
     image,
-    closeImage,
-    setCloseImage,
     pickImage,
     clearImage,
   };

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@bottom-tabs/react-navigation": "^1.1.0",
+    "@corasan/image-compressor": "^0.3.3",
     "@expo/ui": "55.0.1",
     "@expo/vector-icons": "^15.0.3",
     "@react-native-community/cli": "^20.1.2",

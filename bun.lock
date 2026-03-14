@@ -6,6 +6,7 @@
       "name": "dikapay",
       "dependencies": {
         "@bottom-tabs/react-navigation": "^1.1.0",
+        "@corasan/image-compressor": "^0.3.3",
         "@expo/ui": "55.0.1",
         "@expo/vector-icons": "^15.0.3",
         "@react-native-community/cli": "^20.1.2",
@@ -258,6 +259,8 @@
     "@better-fetch/fetch": ["@better-fetch/fetch@1.1.21", "", {}, "sha512-/ImESw0sskqlVR94jB+5+Pxjf+xBwDZF/N5+y2/q4EqD7IARUTSpPfIo8uf39SYpCxyOCtbyYpUrZ3F/k0zT4A=="],
 
     "@bottom-tabs/react-navigation": ["@bottom-tabs/react-navigation@1.1.0", "", { "dependencies": { "color": "^5.0.0" }, "peerDependencies": { "@react-navigation/native": ">=7", "react": "*", "react-native": "*", "react-native-bottom-tabs": "*" } }, "sha512-+4YppCodABcSNIgJiq95QUQ+3ClVBG+rLG3WmYI0+/nbxqKbCz6luFBep4KFOj98Iplj1JY2Ki6ix8CcOZVQ/Q=="],
+
+    "@corasan/image-compressor": ["@corasan/image-compressor@0.3.3", "", { "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-3kNl8ccA74JFb0TzYrnbVo1ARuCoDMANXrDQ3EEQSAXPnG9p0tzJqtI7uRHYmYrgotZd+ELc1Vf/IJ+KQovSAQ=="],
 
     "@egjs/hammerjs": ["@egjs/hammerjs@2.0.17", "", { "dependencies": { "@types/hammerjs": "^2.0.36" } }, "sha512-XQsZgjm2EcVUiZQf11UBJQfmZeEmOW8DpI1gsFeln6w0ae0ii4dMQEQ0kjl6DspdWX1aGY1/loyXnP0JS06e/A=="],
 

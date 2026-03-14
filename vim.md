@@ -35,6 +35,5 @@ Ctrl+g " Show current line info
 "I" cursor to be front of word **
 "A" cursor to be back of word
 
-//
 "ctr k" delete line
 "ctr h" delete word from left to right
