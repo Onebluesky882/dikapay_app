@@ -33,7 +33,7 @@
     },
     "plugins": [
       "expo-router",
-      "@corasan/image-compressor",
+      "react-native-compressor",
       [
         "expo-splash-screen",
         {

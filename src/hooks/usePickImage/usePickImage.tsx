@@ -1,7 +1,6 @@
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { ImageCompressor } from "@corasan/image-compressor";
-
+import { Image } from "react-native-compressor";
 export const usePickImage = () => {
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<string | null>(null);
@@ -19,21 +18,12 @@ export const usePickImage = () => {
 
     try {
       setLoading(true);
-
-      const compressed = ImageCompressor.compress(
-        {
-          uri: asset.uri,
-          width: asset.width,
-          height: asset.height,
-          fileSize: asset.fileSize ?? 0,
-        },
-        {
-          quality: 80,
-          maxHeight: 920,
-        },
-      );
-
-      setImage(compressed.uri);
+      const compressed = await Image.compress(asset.uri, {
+        compressionMethod: "auto",
+        maxHeight: 920,
+      });
+      // todo
+      setImage(compressed);
     } catch (error) {
       console.error("Image compression failed", error);
     } finally {
