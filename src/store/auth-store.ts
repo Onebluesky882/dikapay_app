@@ -1,10 +1,27 @@
-import * as SecureStore from "expo-secure-store";
-import { deleteItemAsync, getItemAsync, setItemAsync } from "expo-secure-store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { getMeApi } from "../api/otp-email/getMe";
 import { otpEmailApi } from "../api/otp-email/otp-email";
 import { User } from "../types/user.type";
+
+import { createMMKV } from "react-native-mmkv";
+
+export const storage = createMMKV();
+
+export const mmkvStorage = {
+  setItem: (key: string, value: string) => {
+    storage.set(key, value);
+  },
+
+  getItem: (key: string) => {
+    const value = storage.getString(key);
+    return value ?? null;
+  },
+
+  removeItem: (key: string) => {
+    storage.remove(key);
+  },
+};
 
 type AuthState = {
   user: User | null;
@@ -27,8 +44,8 @@ export const useAuthStore = create<AuthState>()(
           const { data } = await otpEmailApi.verifyOtp({ email, otp });
           const { token, user } = data;
 
-          await SecureStore.setItemAsync("user-email", email);
-          await SecureStore.setItemAsync("auth-token", token);
+          storage.set("user-email", email);
+          storage.set("auth-token", token);
 
           set({ user });
         } finally {
@@ -40,7 +57,7 @@ export const useAuthStore = create<AuthState>()(
         try {
           set({ loading: true });
 
-          const email = await SecureStore.getItemAsync("user-email");
+          const email = storage.getString("user-email");
 
           if (!email) {
             set({ user: null });
@@ -50,7 +67,7 @@ export const useAuthStore = create<AuthState>()(
           const { data } = await getMeApi.getMe(email);
           const { token, user } = data;
 
-          await SecureStore.setItemAsync("auth-token", token);
+          storage.set("auth-token", token);
 
           set({ user });
         } catch {
@@ -64,8 +81,8 @@ export const useAuthStore = create<AuthState>()(
         try {
           set({ loading: true });
 
-          await SecureStore.deleteItemAsync("user-email");
-          await SecureStore.deleteItemAsync("auth-token");
+          storage.remove("user-email");
+          storage.remove("auth-token");
         } finally {
           set({ user: null, loading: false });
         }
@@ -73,14 +90,10 @@ export const useAuthStore = create<AuthState>()(
     }),
     {
       name: "auth-store",
+      storage: createJSONStorage(() => mmkvStorage),
       partialize: (state) => ({
-        user: state.user, // 👈 persist แค่ user
+        user: state.user,
       }),
-      storage: createJSONStorage(() => ({
-        setItem: setItemAsync,
-        getItem: getItemAsync,
-        removeItem: deleteItemAsync,
-      })),
     },
   ),
 );

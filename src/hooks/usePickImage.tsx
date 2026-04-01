@@ -1,8 +1,7 @@
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
-import { Image } from "react-native-compressor";
+import { loadImage } from "react-native-nitro-image";
 export const usePickImage = () => {
-  const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<string | null>(null);
 
   const pickImage = async () => {
@@ -17,26 +16,35 @@ export const usePickImage = () => {
     if (!asset) return;
 
     try {
-      setLoading(true);
-      const compressed = await Image.compress(asset.uri, {
-        compressionMethod: "auto",
-        maxHeight: 920,
+      // 1. load image
+      const fileImage = await loadImage({
+        filePath: asset.uri,
       });
-      // todo
-      setImage(compressed);
+
+      if (fileImage.height === 0) return;
+
+      const newHeight = 920;
+
+      const newWidth = Math.round(
+        (fileImage.width / fileImage.height) * newHeight,
+      );
+
+      const resized = fileImage.resize(newWidth, newHeight);
+
+      // 2. compress (native)
+      const compressedPath = await resized.saveToTemporaryFileAsync("jpg", 70);
+
+      setImage(compressedPath);
     } catch (error) {
       console.error("Image compression failed", error);
-    } finally {
-      setLoading(false);
     }
   };
 
-  const clearImage = () => {
+  const clearImage = async () => {
     setImage(null);
   };
 
   return {
-    loading,
     image,
     pickImage,
     clearImage,

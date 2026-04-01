@@ -1,4 +1,4 @@
-import { CartItem } from "@/src/types/cart.type";
+import { CartItem } from "@/types/cart.type";
 import { createMMKV } from "react-native-mmkv";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";

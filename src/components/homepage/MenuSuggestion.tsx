@@ -1,4 +1,4 @@
-import { menus } from "@/src/mocks/home.mock";
+import { menus } from "@/mocks/home.mock";
 import React from "react";
 import { FlatList, Text, TouchableOpacity, View } from "react-native";
 export const MenuSuggestion = () => {

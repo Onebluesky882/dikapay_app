@@ -1,4 +1,4 @@
-import { useCartStore } from "@/src/store/Cart/store-order";
+import { useCartStore } from "@/store/Cart/store-order";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import React from "react";
 import { DynamicColorIOS } from "react-native";

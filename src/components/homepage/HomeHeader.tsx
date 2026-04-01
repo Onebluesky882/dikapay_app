@@ -1,4 +1,4 @@
-import { User } from "@/src/types/user.type";
+import { User } from "@/types/user.type";
 import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { Pressable, Text, View } from "react-native";
 

@@ -1,4 +1,4 @@
-import { useShop } from "@/src/store/shop/shop-id";
+import { useShop } from "@/store/shop/shop-id";
 import { router } from "expo-router";
 import React from "react";
 import {

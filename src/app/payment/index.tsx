@@ -1,7 +1,7 @@
-import { useCartStore } from "@/src/store/Cart/store-order";
-import { Cart } from "@/src/types/menu.type";
-import { mergeCart } from "@/src/utils/cart-utils";
-import { getMenuById } from "@/src/utils/getMenuId";
+import { useCartStore } from "@/store/Cart/store-order";
+import { Cart } from "@/types/menu.type";
+import { mergeCart } from "@/utils/cart-utils";
+import { getMenuById } from "@/utils/getMenuId";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";
