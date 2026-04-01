@@ -13,10 +13,8 @@ export function UploadImage({
   handleCloseImage,
   image,
   loading,
-  handleSubmitPresigned,
+  handleSubmitPresigned,    
 }: UploadImageProps) {
- 
-
   return (
     <View className="p-4   rounded-xl">
       <Text className="text-lg font-semibold mb-3">Upload Image</Text>
@@ -44,9 +42,7 @@ export function UploadImage({
           <Text>Select image</Text>
         )}
       </Pressable>
-
       {loading && <ActivityIndicator />}
-
       {image && (
         <View className="flex-row gap-3 mt-4">
           {/* ปุ่มเคลียร์ */}
