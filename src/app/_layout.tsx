@@ -1,4 +1,4 @@
-import "@/global.css";
+import "../../global.css";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useAuthStore } from "@/store/auth-store";
 import {

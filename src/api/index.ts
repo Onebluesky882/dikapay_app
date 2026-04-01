@@ -1,19 +1,30 @@
-import axios from "axios";
+import { fetch } from "react-native-nitro-fetch";
 
-if (!process.env.EXPO_PUBLIC_UPLOAD_IMAGE && !process.env.EXPO_PUBLIC_AUTH) {
-  throw new Error("No API URL defined");
+
+
+type RequestOptions = {
+  method?: "GET" | "POST" | "PUT" | "DELETE";
+  body?: any;
+  headers?: Record<string, string>;
+};
+
+export function createRequest(baseURL: string) {
+  return async function request(path: string, options: RequestOptions = {}) {
+    const res = await fetch(baseURL + path, {
+      method: options.method ?? "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+      },
+      body: options.body ? JSON.stringify(options.body) : undefined,
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data?.message || "Request failed");
+    }
+
+    return data;
+  };
 }
-
-export const uploadImageApi = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_UPLOAD_IMAGE,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
-export const authApi = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_AUTH,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});

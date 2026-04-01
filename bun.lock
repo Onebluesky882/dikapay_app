@@ -18,6 +18,7 @@
         "react-native-chart-kit": "^6.12.0",
         "react-native-keyboard-controller": "^1.21.3",
         "react-native-mmkv": "^4.3.0",
+        "react-native-nitro-fetch": "^0.2.1",
         "react-native-nitro-image": "^0.13.1",
         "react-native-nitro-modules": "^0.35.2",
         "react-native-safe-area-context": "~5.6.2",
@@ -1022,6 +1023,8 @@
 
     "react-native-mmkv": ["react-native-mmkv@4.3.0", "", { "peerDependencies": { "react": "*", "react-native": "*", "react-native-nitro-modules": "*" } }, "sha512-D1wB2ViMrm+0rs7FcbLoct/BV+qugASi+XAZT8MzXy5yl0CI0qxToh2LPnw9UENHrNefpfDZgE5FpMhIB37I5Q=="],
 
+    "react-native-nitro-fetch": ["react-native-nitro-fetch@0.2.1", "", { "dependencies": { "web-streams-polyfill": "^4.2.0" }, "peerDependencies": { "react": "*", "react-native": "*", "react-native-nitro-modules": "^0.35.2", "react-native-worklets-core": "^1.6.0" }, "optionalPeers": ["react-native-worklets-core"] }, "sha512-Vgcy1eHBclTFqAAIfTXUA+rtHTCaU8kY/pObTZbLDO/KaOajiK0ovtq8dR8eJT2iSe4IKJ8k0g2oaZO/mNergQ=="],
+
     "react-native-nitro-image": ["react-native-nitro-image@0.13.1", "", { "peerDependencies": { "react": "*", "react-native": "*", "react-native-nitro-modules": "*" } }, "sha512-o2t1DNmNV57XfCtP6zX3LY7S3oJg1FrwlttuQM9nxoAPNl2bDBaKp+J3NtVFP+vriDPRTRChJP2xqGPbTGzzxw=="],
 
     "react-native-nitro-modules": ["react-native-nitro-modules@0.35.2", "", { "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-97cZcCh3ZAuWAfutel2Q3qLfc45XXh7F9Ei5tEjahP0kV3q8hQelwLIulKXmjN+f0JI5Zf/wCsfwwdVWYU2tKA=="],
@@ -1215,6 +1218,8 @@
     "warn-once": ["warn-once@0.1.1", "", {}, "sha512-VkQZJbO8zVImzYFteBXvBOZEl1qL175WH8VmZcxF2fZAoudNhNDvHi+doCaAEdU2l2vtcIwa2zn0QK5+I1HQ3Q=="],
 
     "wcwidth": ["wcwidth@1.0.1", "", { "dependencies": { "defaults": "^1.0.3" } }, "sha512-XHPEwS0q6TaxcvG85+8EYkbiCux2XtWG2mkc47Ng2A77BQu9+DqIOJldST4HgPkuea7dvKSj5VgX3P1d4rW8Tg=="],
+
+    "web-streams-polyfill": ["web-streams-polyfill@4.2.0", "", {}, "sha512-0rYDzGOh9EZpig92umN5g5D/9A1Kff7k0/mzPSSCY8jEQeYkgRMoY7LhbXtUCWzLCMX0TUE9aoHkjFNB7D9pfA=="],
 
     "whatwg-fetch": ["whatwg-fetch@3.6.20", "", {}, "sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg=="],
 
