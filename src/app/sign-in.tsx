@@ -1,5 +1,5 @@
-import { otpEmailApi } from "@/src/api/otp-email/otp-email";
-import { useAuthStore } from "@/src/store/auth-store";
+import { otpEmailApi } from "@/api/otp-email/otp-email";
+import { useAuthStore } from "@/store/auth-store";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,

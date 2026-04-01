@@ -1,49 +1,33 @@
-import { uploadImage } from "@/src/api/attach-image/presigned-url";
-import Banner from "@/src/components/homepage/Bannner";
-import { CouponCard } from "@/src/components/homepage/CouponCard";
-import HomeHeader from "@/src/components/homepage/HomeHeader";
-import MenuIcon from "@/src/components/homepage/MenuIcon";
-import { MenuSuggestion } from "@/src/components/homepage/MenuSuggestion";
-import Promotion from "@/src/components/homepage/Promotion";
-import { RecommendedCard } from "@/src/components/homepage/RecommendCard";
-import { UploadImage } from "@/src/components/upload-image";
-import { usePickImage } from "@/src/hooks/usePickImage/usePickImage";
-import { useAuthStore } from "@/src/store/auth-store";
-import { PresignedUrlDto } from "@/src/types/upload-image.type";
-import { getMimeType } from "@/src/utils/getMimeImageType";
+import Banner from "@/components/homepage/Bannner";
+import { CouponCard } from "@/components/homepage/CouponCard";
+import HomeHeader from "@/components/homepage/HomeHeader";
+import MenuIcon from "@/components/homepage/MenuIcon";
+import { MenuSuggestion } from "@/components/homepage/MenuSuggestion";
+import Promotion from "@/components/homepage/Promotion";
+import { RecommendedCard } from "@/components/homepage/RecommendCard";
+import { UploadImage } from "@/components/upload-image";
+import { usePickImage } from "@/hooks/usePickImage";
+import { useUploadImage } from "@/hooks/useUploadImage";
+import { useAuthStore } from "@/store/auth-store";
 import { router } from "expo-router";
-import React from "react";
 import { ScrollView, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomePage() {
   const user = useAuthStore((state) => state.user);
-  const { image, loading, pickImage, clearImage } = usePickImage();
+  const { image, pickImage, clearImage } = usePickImage();
   const userId = String(user?.id);
 
+  const { upload, loading } = useUploadImage();
+
   const handleSubmitPresigned = async () => {
-    if (!image) return;
+    if (!image || !user?.id) return;
 
-    const body: PresignedUrlDto = {
-      imageType: "slip",
-      userId,
-      mimeType: getMimeType(image),
-    };
-
-    const res = await uploadImage.presignedUrl(body);
-
-    const file = await fetch(image);
-    const blob = await file.blob();
-
-    const data = await uploadImage.clientUpload({
-      presignedUrl: res.data.path,
-      blob,
-      mimeType: body.mimeType,
-      userId,
-    });
-
-    if (data) {
+    try {
+      await upload(image, userId);
       clearImage();
+    } catch (error) {
+      console.error(error);
     }
   };
 

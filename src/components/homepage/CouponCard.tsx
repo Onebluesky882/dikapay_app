@@ -1,4 +1,4 @@
-import { promotions } from "@/src/mocks/home.mock";
+import { promotions } from "@/mocks/home.mock";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 

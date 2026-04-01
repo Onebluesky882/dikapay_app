@@ -1,10 +1,12 @@
-import { useAuthStore } from "@/src/store/auth-store";
+import { useAuthStore } from "@/store/auth-store";
 import { Ionicons } from "@expo/vector-icons";
 
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Config from "react-native-superconfig";
 
+console.log(Config.API_URL);
 export default function Homepage() {
   const menu = [
     { id: "1", icon: "heart", name: "ขนม" },

@@ -1,4 +1,4 @@
-import { VerifyOtp } from "@/src/types/otp-email";
+import { VerifyOtp } from "@/types/otp-email";
 import { authApi } from "..";
 
 export const otpEmailApi = {

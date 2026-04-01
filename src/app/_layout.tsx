@@ -1,6 +1,6 @@
 import "@/global.css";
-import { useColorScheme } from "@/src/hooks/use-color-scheme";
-import { useAuthStore } from "@/src/store/auth-store";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useAuthStore } from "@/store/auth-store";
 import {
   DarkTheme,
   DefaultTheme,
@@ -22,16 +22,16 @@ export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
 
   useFonts({
-    SarabunRegular: require("@/assets/fonts/sarabun/Sarabun-Regular.ttf"),
-    SarabunMedium: require("@/assets/fonts/sarabun/Sarabun-Medium.ttf"),
-    SarabunSemiBold: require("@/assets/fonts/sarabun/Sarabun-SemiBold.ttf"),
-    SarabunBold: require("@/assets/fonts/sarabun/Sarabun-Bold.ttf"),
+    SarabunRegular: require("../../assets/fonts/sarabun/Sarabun-Regular.ttf"),
+    SarabunMedium: require("../../assets/fonts/sarabun/Sarabun-Medium.ttf"),
+    SarabunSemiBold: require("../../assets/fonts/sarabun/Sarabun-SemiBold.ttf"),
+    SarabunBold: require("../../assets/fonts/sarabun/Sarabun-Bold.ttf"),
 
-    SFProRegular: require("@/assets/fonts/sfpro/SF-Pro-Text-Regular.otf"),
-    SFProMedium: require("@/assets/fonts/sfpro/SF-Pro-Text-Medium.otf"),
-    SFProSemiBold: require("@/assets/fonts/sfpro/SF-Pro-Text-Semibold.otf"),
-    SFProBold: require("@/assets/fonts/sfpro/SF-Pro-Text-Bold.otf"),
-    SFProBlack: require("@/assets/fonts/sfpro/SF-Pro-Text-Black.otf"),
+    SFProRegular: require("../../assets/fonts/sfpro/SF-Pro-Text-Regular.otf"),
+    SFProMedium: require("../../assets/fonts/sfpro/SF-Pro-Text-Medium.otf"),
+    SFProSemiBold: require("../../assets/fonts/sfpro/SF-Pro-Text-Semibold.otf"),
+    SFProBold: require("../../assets/fonts/sfpro/SF-Pro-Text-Bold.otf"),
+    SFProBlack: require("../../assets/fonts/sfpro/SF-Pro-Text-Black.otf"),
   });
 
   useEffect(() => {

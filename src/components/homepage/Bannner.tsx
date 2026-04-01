@@ -1,4 +1,4 @@
-import { banners } from "@/src/mocks/home.mock";
+import { banners } from "@/mocks/home.mock";
 import React from "react";
 import { Dimensions, Image, ScrollView, View } from "react-native";
 

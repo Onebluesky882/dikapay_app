@@ -1,4 +1,4 @@
-import { recommendedShops } from "@/src/mocks/home.mock";
+import { recommendedShops } from "@/mocks/home.mock";
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 
 type RecommendCardProps = {

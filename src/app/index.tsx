@@ -8,7 +8,7 @@ export default function index() {
     <View className="flex-1 bg-white items-center justify-center px-6">
       {/* Tech SVG */}
       <LottieView
-        source={require("@/assets/dottie/Delivery.json")}
+        source={require("../../assets/dottie/Delivery.json")}
         autoPlay
         loop
         style={{ width: 200, height: 200 }}

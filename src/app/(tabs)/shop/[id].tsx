@@ -1,5 +1,5 @@
-import { shops } from "@/src/mocks/shop.mock";
-import { useCartStore } from "@/src/store/Cart/store-order";
+import { shops } from "@/mocks/shop.mock";
+import { useCartStore } from "@/store/Cart/store-order";
 import { AntDesign, Feather, Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import React, { useState } from "react";

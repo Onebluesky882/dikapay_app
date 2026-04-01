@@ -1,10 +1,10 @@
-import { CartList } from "@/src/components/cart/Cart";
-import { RemoveCart } from "@/src/components/cart/RemoveCart";
-import { useCartStore } from "@/src/store/Cart/store-order";
-import { useShop } from "@/src/store/shop/shop-id";
-import { Cart } from "@/src/types/menu.type";
-import { mergeCart } from "@/src/utils/cart-utils";
-import { getMenuById } from "@/src/utils/getMenuId";
+import { CartList } from "@/components/cart/Cart";
+import { RemoveCart } from "@/components/cart/RemoveCart";
+import { useCartStore } from "@/store/Cart/store-order";
+import { useShop } from "@/store/shop/shop-id";
+import { Cart } from "@/types/menu.type";
+import { mergeCart } from "@/utils/cart-utils";
+import { getMenuById } from "@/utils/getMenuId";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React, { useState } from "react";

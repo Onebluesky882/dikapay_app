@@ -1,4 +1,4 @@
-import { homeMenus } from "@/src/mocks/menu-homepage.mock";
+import { homeMenus } from "@/mocks/menu-homepage.mock";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";

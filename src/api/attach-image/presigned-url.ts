@@ -1,7 +1,4 @@
-import {
-  ClientUploadDto,
-  PresignedUrlDto,
-} from "@/src/types/upload-image.type";
+import { ClientUploadDto, PresignedUrlDto } from "@/types/upload-image.type";
 import { uploadImageApi } from "..";
 
 export const uploadImage = {
