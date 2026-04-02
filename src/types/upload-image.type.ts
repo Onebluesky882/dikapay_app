@@ -6,7 +6,6 @@ export type PresignedUrlDto = {
 
 export type ClientUploadDto = {
   presignedUrl: string;
-  blob: Blob;
-  userId: string;
+  image: string;
   mimeType: string;
 };

@@ -17,23 +17,24 @@ export const uploadImage = {
     }),
 
   clientUpload: async (body: ClientUploadDto) => {
-    const { presignedUrl, blob, mimeType, userId } = body;
+    const { presignedUrl, mimeType, image } = body;
+
     const res = await fetch(presignedUrl, {
       method: "PUT",
       headers: {
         "Content-Type": mimeType,
       },
-      body: blob,
+      body: {
+        uri: image,
+        type: mimeType,
+      } as any, // 👈 สำคัญ
     });
+
     if (!res.ok) {
       throw new Error("Upload failed");
     }
 
-    // anathoer api to record image detail
-
-    return {
-      success: true,
-    };
+    return { success: true };
   },
   // todo
   saveImage: (body: SaveImageDto) =>

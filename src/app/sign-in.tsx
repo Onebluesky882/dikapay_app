@@ -50,11 +50,11 @@ export default function SignIn() {
     }
   };
 
-  const verifyOtp = async () => {
-    const cleanOtp = otp.replace(/[^0-9]/g, "");
-    if (cleanOtp.length !== 6) return;
+  const verifyOtp = async (inputOtp?: string) => {
+    if (!inputOtp) return;
+    if (inputOtp.length !== 6) return;
     try {
-      await loginWithOtp(email, cleanOtp);
+      await loginWithOtp(email, inputOtp);
       setPutOtpDone(true);
     } catch (error) {
       setOtp(""); // reset (แนะนำ)
@@ -65,7 +65,6 @@ export default function SignIn() {
   return (
     <View className="flex-1 justify-center px-6 bg-gray-100">
       <Text className="text-3xl font-bold text-center mb-8">Login</Text>
-      <Text>{Config.EXPO_PUBLIC_AUTH}</Text>
       {/* Email Input */}
       <View
         style={{
@@ -126,7 +125,7 @@ export default function SignIn() {
 
               if (clean.length === 6) {
                 setPutOtpDone(true);
-                verifyOtp();
+                verifyOtp(clean);
               }
             }}
             keyboardType="numeric"
@@ -140,7 +139,7 @@ export default function SignIn() {
           {/* VERIFY BUTTON */}
           <TouchableOpacity
             disabled={authLoading}
-            onPress={verifyOtp}
+            onPress={() => verifyOtp}
             className={`${!putOtpDone ? "bg-gray-400" : "bg-green-600"} p-4 rounded-xl items-center`}
           >
             {authLoading ? (

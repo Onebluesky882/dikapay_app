@@ -23,16 +23,14 @@ export const usePickImage = () => {
 
       if (fileImage.height === 0) return;
 
-      const newHeight = 920;
-
+      const newHeight = 780;
       const newWidth = Math.round(
         (fileImage.width / fileImage.height) * newHeight,
       );
-
       const resized = fileImage.resize(newWidth, newHeight);
 
       // 2. compress (native)
-      const compressedPath = await resized.saveToTemporaryFileAsync("jpg", 70);
+      const compressedPath = await resized.saveToTemporaryFileAsync("jpg", 30);
 
       setImage(compressedPath);
     } catch (error) {

@@ -33,7 +33,7 @@ export default function RootLayout() {
     SFProBold: require("../../assets/fonts/sfpro/SF-Pro-Text-Bold.otf"),
     SFProBlack: require("../../assets/fonts/sfpro/SF-Pro-Text-Black.otf"),
   });
-  console.log("user", user);
+
   useEffect(() => {
     const prepare = async () => {
       await loadSession();

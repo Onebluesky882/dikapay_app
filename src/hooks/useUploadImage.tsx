@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { uploadImage } from "@/api/attach-image/presigned-url";
 import { getMimeType } from "@/utils/getMimeImageType";
+import { uploadImage } from "@/api/upload-image/uploadImageApi";
 export function useUploadImage() {
   const [loading, setLoading] = useState(false);
 
@@ -16,15 +16,15 @@ export function useUploadImage() {
         mimeType,
       });
 
-      const file = await fetch(image);
-      const blob = await file.blob();
-
-      // 3. upload to S3
-      await uploadImage.clientUpload({
-        presignedUrl: res.data.path,
-        blob,
-        mimeType,
-        userId,
+      await fetch(res.path, {
+        method: "PUT",
+        headers: {
+          "Content-Type": mimeType,
+        },
+        body: {
+          uri: image,
+          type: mimeType,
+        } as any,
       });
     } catch (error) {
       console.error("upload failed:", error);
