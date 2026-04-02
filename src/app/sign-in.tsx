@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import Config from "react-native-superconfig";
 
 export default function SignIn() {
   const loginWithOtp = useAuthStore((state) => state.loginWithOtp);
@@ -20,7 +21,7 @@ export default function SignIn() {
   const [otpSent, setOtpSent] = useState(false);
   const [sendingOtp, setSendingOtp] = useState(false);
   const [countdown, setCountdown] = useState(0);
-
+  const [putOtpDone, setPutOtpDone] = useState(false);
   // countdown timer
   useEffect(() => {
     if (countdown <= 0) return;
@@ -50,13 +51,13 @@ export default function SignIn() {
   };
 
   const verifyOtp = async () => {
-    if (!otp) return Alert.alert("Please enter OTP");
-
+    const cleanOtp = otp.replace(/[^0-9]/g, "");
+    if (cleanOtp.length !== 6) return;
     try {
-      await loginWithOtp(email, otp);
-      // ไม่ต้อง navigate เอง
-      // guard จะ redirect ให้
+      await loginWithOtp(email, cleanOtp);
+      setPutOtpDone(true);
     } catch (error) {
+      setOtp(""); // reset (แนะนำ)
       Alert.alert("Error", "Invalid OTP");
     }
   };
@@ -64,7 +65,7 @@ export default function SignIn() {
   return (
     <View className="flex-1 justify-center px-6 bg-gray-100">
       <Text className="text-3xl font-bold text-center mb-8">Login</Text>
-
+      <Text>{Config.EXPO_PUBLIC_AUTH}</Text>
       {/* Email Input */}
       <View
         style={{
@@ -85,7 +86,6 @@ export default function SignIn() {
           autoCapitalize="none"
           keyboardType="email-address"
           autoCorrect={false}
-          editable={!otpSent}
           underlineColorAndroid="transparent"
           className="text-gray-500"
           style={{
@@ -105,7 +105,7 @@ export default function SignIn() {
       {!otpSent ? (
         // SEND OTP BUTTON
         <TouchableOpacity
-          disabled={sendingOtp}
+          disabled={authLoading}
           onPress={sendOtp}
           className="bg-blue-600 p-4 rounded-xl items-center"
         >
@@ -119,18 +119,29 @@ export default function SignIn() {
         <>
           {/* OTP Input */}
           <TextInput
-            placeholder="Enter OTP"
-            className="bg-white p-4 rounded-xl mb-4 border border-gray-200 text-lg"
             value={otp}
-            onChangeText={setOtp}
-            keyboardType="number-pad"
+            onChangeText={(text) => {
+              const clean = text.replace(/[^0-9]/g, "");
+              setOtp(clean);
+
+              if (clean.length === 6) {
+                setPutOtpDone(true);
+                verifyOtp();
+              }
+            }}
+            keyboardType="numeric"
+            textContentType="oneTimeCode"
+            autoComplete="one-time-code"
+            maxLength={6}
+            editable={!authLoading}
+            className="bg-white p-4 rounded-xl mb-4 border border-gray-200 text-lg"
           />
 
           {/* VERIFY BUTTON */}
           <TouchableOpacity
             disabled={authLoading}
             onPress={verifyOtp}
-            className="bg-green-600 p-4 rounded-xl items-center"
+            className={`${!putOtpDone ? "bg-gray-400" : "bg-green-600"} p-4 rounded-xl items-center`}
           >
             {authLoading ? (
               <ActivityIndicator color="#fff" />

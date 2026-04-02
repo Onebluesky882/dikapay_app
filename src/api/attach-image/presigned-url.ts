@@ -17,8 +17,7 @@ export const uploadImage = {
     }),
 
   clientUpload: async (body: ClientUploadDto) => {
-    const { presignedUrl, blob, mimeType } = body;
-
+    const { presignedUrl, blob, mimeType, userId } = body;
     const res = await fetch(presignedUrl, {
       method: "PUT",
       headers: {
@@ -26,10 +25,11 @@ export const uploadImage = {
       },
       body: blob,
     });
-
     if (!res.ok) {
       throw new Error("Upload failed");
     }
+
+    // anathoer api to record image detail
 
     return {
       success: true,

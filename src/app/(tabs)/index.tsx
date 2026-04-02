@@ -4,9 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Config from "react-native-superconfig";
 
-console.log(Config.API_URL);
 export default function Homepage() {
   const menu = [
     { id: "1", icon: "heart", name: "ขนม" },
@@ -63,18 +61,8 @@ const ActionButton = ({ icon, label }: { icon: any; label: string }) => {
       <View className="bg-white/20 p-3 rounded-full">
         <Ionicons name={icon} size={20} color="white" />
       </View>
-      <Hello />
+
       <Text className="text-white text-xs mt-2">{label}</Text>
     </Pressable>
-  );
-};
-const Hello = () => {
-  const first = "hello";
-  return (
-    <>
-      <View>
-        <Text>hello</Text>
-      </View>
-    </>
   );
 };

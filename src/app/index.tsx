@@ -1,9 +1,11 @@
+import { useAuthStore } from "@/store/auth-store";
 import { router } from "expo-router";
 import LottieView from "lottie-react-native";
 import React from "react";
 import { Text, TouchableOpacity, View } from "react-native";
 
 export default function index() {
+  const user = useAuthStore((s) => s.user);
   return (
     <View className="flex-1 bg-white items-center justify-center px-6">
       {/* Tech SVG */}
@@ -19,6 +21,7 @@ export default function index() {
       <Text className="text-base text-gray-500 text-center mb-10">
         Secure. Simple. Reliable digital payments.
       </Text>
+      <Text>user: {user?.email}</Text>
       <TouchableOpacity
         onPress={() => router.push("/sign-in")}
         className="bg-[#3f5be9] px-8 py-4 rounded-xl w-full"
