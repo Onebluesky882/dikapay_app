@@ -1,0 +1,16 @@
+name = "dikapay-api"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+OWNER_EMAIL = "wansing05@gmail.com"
+ALLOWED_ORIGINS = ""
+SLIP_VERIFICATION_URL = "http://localhost:8090"
+# Secret — set via: wrangler secret put SLIP_VERIFICATION_INTERNAL_SECRET
+# Must match INTERNAL_SECRET in packages/slip-verification-service/.env
+
+[[d1_databases]]
+binding = "DB"
+database_name = "dikapay-db"
+database_id = "4a91335c-3cd3-4f4c-9683-85147c56445e"

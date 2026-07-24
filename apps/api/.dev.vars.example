@@ -1,0 +1,7 @@
+# ── Auth ──────────────────────────────────────────────
+OWNER_EMAIL=wansing05@gmail.com
+ALLOWED_ORIGINS=http://localhost:8081,http://localhost:19006
+
+# ── Payment (packages/slip-verification-service) ──────
+SLIP_VERIFICATION_URL=http://localhost:8090
+SLIP_VERIFICATION_INTERNAL_SECRET=changeme-use-a-long-random-string-here

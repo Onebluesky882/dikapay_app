@@ -1,0 +1,28 @@
+{
+  "name": "@gover-agent/api",
+  "version": "0.0.1",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "tsc --noEmit",
+    "deploy": "wrangler deploy",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@gover-agent/auth": "workspace:*",
+    "@gover-agent/db": "workspace:*",
+    "better-auth": "^1.6.19",
+    "hono": "latest",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "latest",
+    "@gover-agent/config": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
+    "eslint": "^9.39.1",
+    "typescript": "latest",
+    "wrangler": "latest"
+  }
+}
