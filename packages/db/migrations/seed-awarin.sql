@@ -1,9 +1,11 @@
 -- Real example shop, per Dev: "เอวาริน" (Awarin) — 10 tables, 4 seats each, customers scan a
 -- per-table QR to order. qr_token is what gets encoded into the physical QR code on each table.
-INSERT INTO `shop` (`id`, `name`, `slug`, `created_at`, `updated_at`)
+-- OR IGNORE makes this safe to re-run (e.g. re-applying migrations in order on a DB that
+-- already has this data) — it silently skips rows whose primary key/unique columns already exist.
+INSERT OR IGNORE INTO `shop` (`id`, `name`, `slug`, `created_at`, `updated_at`)
 VALUES ('shop_awarin', 'เอวาริน', 'awarin', unixepoch(), unixepoch());
 
-INSERT INTO `dining_table` (`id`, `shop_id`, `table_number`, `seats`, `qr_token`, `created_at`, `updated_at`)
+INSERT OR IGNORE INTO `dining_table` (`id`, `shop_id`, `table_number`, `seats`, `qr_token`, `created_at`, `updated_at`)
 VALUES
   ('table_awarin_01', 'shop_awarin', 1, 4, 'awarin-t01', unixepoch(), unixepoch()),
   ('table_awarin_02', 'shop_awarin', 2, 4, 'awarin-t02', unixepoch(), unixepoch()),

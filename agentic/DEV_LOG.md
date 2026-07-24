@@ -28,6 +28,11 @@ Log
 <!-- Add newest entries at the top -->
 
 Date: 2026-07-24
+File(s) changed: packages/db/migrations/seed-awarin.sql, packages/db/migrations/seed-awarin-menu.sql
+Reason: Dev hit "UNIQUE constraint failed: shop.slug" re-running seed-awarin.sql in their own terminal — expected, since Dev had already run it successfully in an earlier round (before payment/menu schema existed) and the seed files weren't idempotent.
+Impact: Changed all INSERT statements in both seed files to INSERT OR IGNORE, so re-running the full migration sequence on a DB that already has some/all of this data no longer errors — it just skips rows that already exist. No schema change, no data change for anyone running these fresh.
+
+Date: 2026-07-24
 File(s) changed: apps/api/wrangler.toml (secret set, not committed), packages/rbac-core/* (new), packages/db/src/schema/auth.ts, packages/db/package.json, apps/api/src/domains/shop/shop.route.ts, apps/api/package.json, agentic/PIPELINE.md
 Reason: Dev: "เตรียมไว้ก่อนแล้วข้ามต่อไป" (prepare it, then move on) in response to being asked whether to deploy apps/api or wait for Slip2Go setup — deployed, then moved to the next unblocked backend stage (stage-8) rather than waiting on Dev's external Slip2Go account.
 Impact:
