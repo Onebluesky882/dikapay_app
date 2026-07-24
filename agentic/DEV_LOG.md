@@ -28,6 +28,11 @@ Log
 <!-- Add newest entries at the top -->
 
 Date: 2026-07-24
+File(s) changed: agentic/PIPELINE.md, agentic/ARCHITECTURE.md
+Reason: Dev chose "Migrate remote D1" when asked what to do next after stage-2's first backend slice landed.
+Impact: Ran all 5 schema migrations (auth, shop, shop-receiving-account, menu, payment) plus both Awarin seed files against the REAL remote Cloudflare D1 (`wrangler d1 execute dikapay-db --remote`, not local) — confirmed live (`served_by: v3-prod`, SIN region) by reading back the shop/tables/menu item. Remote D1 now has 10 tables and matches local. `apps/api` itself is still not deployed (`wrangler deploy` not run) and `SLIP_VERIFICATION_INTERNAL_SECRET` is not yet set as a real secret — deploying now would run but the payment route would fail closed until that secret exists.
+
+Date: 2026-07-24
 File(s) changed: packages/db/src/schema/shop.ts, packages/db/src/schema/payment.ts (new), packages/db/src/schema/index.ts, packages/db/migrations/shop-receiving-account.sql (new), packages/db/migrations/payment.sql (new), packages/auth/src/auth.ts, apps/api/src/domains/shop/shop.route.ts, apps/api/src/domains/payment/* (new), apps/api/src/index.ts, apps/api/wrangler.toml, apps/api/.dev.vars.example, agentic/PIPELINE.md
 Reason: Dev: start stage-2-payment-core — "ร้านค้ารับเงินได้ตรงจากลูกค้า โดยการมีฟอร์มให้ลูกค้าถ่ายสลิปรับเงิน เพื่อบันทึก received บัญชีผู้รับ locked only owner can change" (shop receives payment directly from customer via a slip-submission form; the receiving account is locked, only the owner can change it).
 Impact:

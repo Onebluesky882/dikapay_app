@@ -69,12 +69,12 @@ Conductor Branch: main
 - The payment-event contract in CONTRACTS.md (stage-5 ledger and stage-6 dashboard will consume this)
 
 **Next:**
-1. Dev: run `shop-receiving-account.sql` and `payment.sql` in your own local/remote D1 (same caveat as stage-4/stage-9 — this agent's local D1 is a separate file from yours)
-2. Dev: run `packages/slip-verification-service` locally (needs `SLIP_2GO_SECRET` — real Slip2Go account) and point `apps/api`'s `SLIP_VERIFICATION_INTERNAL_SECRET`/`SLIP_VERIFICATION_URL` at it, to test with a real slip
+1. Dev: run `shop-receiving-account.sql` and `payment.sql` in your own local D1 too (same caveat as stage-4/stage-9 — this agent's local D1 is a separate file from yours; remote D1 already has this, migrated 2026-07-24)
+2. Dev: run `packages/slip-verification-service` somewhere reachable from `apps/api` (needs `SLIP_2GO_SECRET` — real Slip2Go account) and point `apps/api`'s `SLIP_VERIFICATION_INTERNAL_SECRET`/`SLIP_VERIFICATION_URL` (currently `wrangler secret put` + `http://localhost:8090` placeholder — won't reach the deployed Worker) at it, to test with a real slip
 3. Conductor: write the payment-event contract in CONTRACTS.md
 4. Dikapay/Merchant: build the actual screens
 
-**Blockers:** none technical — waiting on Dev to run the slip-verification-service locally with real Slip2Go credentials to test past the mocked-out point
+**Blockers:** none technical — waiting on Dev to run the slip-verification-service (locally or deployed) with real Slip2Go credentials to test past the mocked-out point
 
 ---
 
@@ -118,7 +118,7 @@ Conductor Branch: main
 **Prices — MOCK, not real (Dev: "mock ราคาได้ตามใจชอบ"):** `base_price` 5000 (50.00 THB) for กะเพรา; `price_delta` 1000 (หมูกรอบ), 1500 (XL), 1500 (ใส่เบคอน), 1000 (ใส่เห็ดฟาง), all in satang. A fully-loaded order totals 100.00 THB. Realistic Thai street-food pricing, not Awarin's actual menu — replace when Dev gives real numbers.
 
 **Next:**
-1. Dev: run `shop.sql`, `menu.sql`, `seed-awarin.sql`, `seed-awarin-menu.sql` locally in your own terminal too — the local D1 this agent's sandbox writes to is a **separate** file from the one `pnpm dev` uses in your terminal (same happened with `auth.sql` — see DEV_LOG.md). Remote D1 has none of this yet either.
+1. Dev: run `shop.sql`, `menu.sql`, `seed-awarin.sql`, `seed-awarin-menu.sql` locally in your own terminal too — the local D1 this agent's sandbox writes to is a **separate** file from the one `pnpm dev` uses in your terminal (same happened with `auth.sql` — see DEV_LOG.md). Remote D1 already has this (migrated 2026-07-24, see stage-9/stage-2).
 2. Dikapay app: build the actual scan → menu → cart screens consuming these routes
 3. Merchant app: live orders-in-progress view (not started — no `order` table yet; that's the next schema piece once checkout flow is designed)
 
@@ -222,7 +222,7 @@ Conductor Branch: main
 2. When ready to actually deploy: re-run the migration with `--remote` (`wrangler d1 execute dikapay-db --remote --file=../../packages/db/migrations/auth.sql`) — the local run above does **not** touch the remote database
 3. Conductor: write the `/api/auth/*` contract in CONTRACTS.md once verified working
 
-**Blockers:** none — D1 provisioned and migrated locally; remote migration + first `pnpm dev` smoke test still pending
+**Blockers:** none — D1 provisioned, migrated locally AND remotely (2026-07-24: all 5 schema migrations + Awarin seed data applied to remote D1, `served_by: v3-prod`, SIN region, verified by reading back the seeded rows); `pnpm dev` smoke-tested successfully against local D1 (see stage-2 and stage-4 entries)
 
 ---
 

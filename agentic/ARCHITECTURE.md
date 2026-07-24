@@ -33,7 +33,7 @@ Shared conventions across apps:
 ## External Dependencies
 
 - **Cloudflare Workers** — hosts `apps/api`
-- **Cloudflare D1** — SQLite-compatible database, bound as `DB` in `apps/api`'s `wrangler.toml`; provisioned (`dikapay-db`), auth schema migrated locally — remote migration still pending (see PIPELINE.md → stage-9)
+- **Cloudflare D1** — SQLite-compatible database, bound as `DB` in `apps/api`'s `wrangler.toml`; provisioned (`dikapay-db`), fully migrated both locally and remotely (auth, shop, dining_table, menu_item, modifier_group, modifier_option, payment — 10 tables, remote confirmed `v3-prod`/SIN region 2026-07-24, see PIPELINE.md → stage-9/stage-2/stage-4)
 - **better-auth** — email/password auth, session, bearer-token issuance
 - **Slip2Go** (via `packages/slip-verification-service`) — bank-slip/PromptPay QR verification for scan-to-pay
 
@@ -43,4 +43,4 @@ Shared conventions across apps:
 
 - Expo SDK and React Native versions must stay aligned across all three apps (see AGENT_RULES.md → Version Policy)
 - No CI/CD or deploy pipeline is wired up yet — see CONDUCTOR.md → Verification & Deployment
-- `apps/api`'s D1 database (`dikapay-db`) is provisioned and migrated locally; the remote D1 instance has not been migrated yet — run the auth migration with `--remote` before deploying
+- `apps/api`'s D1 database (`dikapay-db`) is fully migrated, but `apps/api` itself has never been deployed (`wrangler deploy`) — `SLIP_VERIFICATION_INTERNAL_SECRET` also isn't set as a real secret yet (`wrangler secret put`)
