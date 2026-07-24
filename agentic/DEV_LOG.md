@@ -28,6 +28,18 @@ Log
 <!-- Add newest entries at the top -->
 
 Date: 2026-07-24
+File(s) changed: apps/Dikapay/app.json, apps/Dikapay/.env (not committed — gitignored), apps/Dikapay/package.json (expo-camera), apps/Dikapay/src/api/shop/shop-api.ts (new), apps/Dikapay/src/types/table-scan.type.ts (new), apps/Dikapay/src/utils/format-money.ts (new), apps/Dikapay/src/app/(tabs)/shop/scan.tsx (new), apps/Dikapay/src/app/(tabs)/shop/table/[qrToken].tsx (new), apps/Dikapay/src/app/(tabs)/shop/index.tsx, apps/Dikapay/src/app/(tabs)/shop/_layout.tsx, agentic/PIPELINE.md
+Reason: Dev: "เน้นแอพ expo user interface ก่อน" (focus on the Expo app UI first). Asked which app/flow first — chose Dikapay: scan QR → view menu, since it's backed by working apps/api routes from stage-2/4/9 and doesn't need Slip2Go.
+Impact:
+- Surveyed existing Dikapay/Merchant app state first (via Explore agent) before writing anything: Dikapay has a REAL but SEPARATE auth backend already (Railway-hosted, EXPO_PUBLIC_AUTH env var) — not the apps/api this session built. Merchant app is almost entirely stub/placeholder screens with no real auth/state/API calls at all. Neither app had any camera/QR capability.
+- Installed expo-camera via `npx expo install` (not pnpm add — Expo-managed native module, per AGENT_RULES.md version policy), added its config plugin to app.json with a Thai camera-permission string.
+- Built a new, separate API client (shop-api.ts) pointed at EXPO_PUBLIC_DIKAPAY_API (the Cloudflare Worker from stage-9) — deliberately not merged with the existing otp-email.ts/EXPO_PUBLIC_AUTH client, since that's a different backend entirely; noted as a future convergence point, not resolved now.
+- New scan.tsx (camera QR scanner) and table/[qrToken].tsx (real menu view) screens follow the existing shop/[id].tsx's conventions closely (uniwind classes, #00B14F green accent, @expo/vector-icons, SafeAreaView) rather than introducing a new visual language, per DESIGN_SYSTEM.md.
+- Explicitly did NOT build cart/ordering UI — no `order` table exists in packages/db yet, so a fake "add to cart" that goes nowhere would violate the no-half-finished-flows rule. The menu screen states plainly that ordering isn't live yet.
+- tsc --noEmit clean for every new/touched file; pre-existing type errors in unrelated Expo-template boilerplate (haptic-tab.tsx etc.) left untouched — out of scope.
+- expo-doctor flagged pnpm-hoisting "duplicate dependency" warnings and a missing react-native-svg peer dep for react-native-chart-kit — both pre-existing, unrelated to this change, not fixed (would be scope creep).
+
+Date: 2026-07-24
 File(s) changed: agentic/PIPELINE.md (no code change)
 Reason: Dev finished running all local D1 migrations and verified table-by-table against expectations this agent gave (table list, shop row, dining_table count, menu_item, modifier_group, modifier_option) — all 10 tables present, all data matched exactly.
 Impact: Confirms local D1, remote D1, and this agent's sandbox D1 are now fully in sync for the schema/seed data built so far. No open D1-sync gaps remain for stage-2/4/9.

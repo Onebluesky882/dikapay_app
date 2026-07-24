@@ -35,6 +35,12 @@
             "imageWidth": 76
           }
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "อนุญาตให้ Dikapay ใช้กล้องเพื่อสแกน QR โต๊ะ"
+        }
       ]
     ],
     "experiments": {

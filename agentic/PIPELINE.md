@@ -121,11 +121,22 @@ Conductor Branch: main
 
 **Verified 2026-07-24:** Dev ran all remaining migrations locally and confirmed, table by table (tables list, shop row, dining_table count, menu_item, modifier_group, modifier_option) — all 10 tables present, data matches exactly what's in remote D1 and this agent's sandbox. Local, remote, and sandbox D1 are now fully in sync.
 
-**Next:**
-1. Dikapay app: build the actual scan → menu → cart screens consuming these routes
-2. Merchant app: live orders-in-progress view (not started — no `order` table yet; that's the next schema piece once checkout flow is designed)
+**Done (Dikapay UI — scan → menu, 2026-07-24, Dev: "เน้นแอพ expo user interface ก่อน"):**
+- `expo-camera` installed (`npx expo install`, resolved `~55.0.21` for the pinned SDK) with `cameraPermission` plugin config in `app.json` (Thai permission string)
+- New API client `apps/Dikapay/src/api/shop/shop-api.ts` — separate from the existing `EXPO_PUBLIC_AUTH`/Railway auth API (different backend); points at `EXPO_PUBLIC_DIKAPAY_API` (`.env`, gitignored, set to the deployed Worker URL from stage-9)
+- `src/app/(tabs)/shop/scan.tsx` — full-screen `CameraView` QR scanner (permission request state, scan-guard so one frame can't double-fire), navigates to the resolved table on scan
+- `src/app/(tabs)/shop/table/[qrToken].tsx` — calls `GET /api/tables/:qrToken` then `GET /api/shops/:slug/menu`, renders shop name/table/seats header + real menu with modifier groups/options and mock prices, with loading/error(retry)/empty states per DESIGN_SYSTEM.md
+- "สแกน QR โต๊ะ" entry button added to the existing (mock) shop browse screen; both new routes registered in `shop/_layout.tsx`'s Stack
+- `tsc --noEmit` clean for all new/touched files (pre-existing unrelated errors in template boilerplate — `haptic-tab.tsx`, `parallax-scroll-view.tsx`, `icon-symbol.tsx` — left alone, out of scope)
 
-**Blockers:** none — waiting on Dev applying migrations in their own local D1
+**Deliberately not built this pass:** cart/checkout/ordering UI — there's no `order` table yet (see below), so "add to cart" would be fake/non-functional. The menu screen says so explicitly ("สั่งอาหารผ่านแอปยังไม่เปิดใช้งาน") rather than pretending to work.
+
+**Next:**
+1. Design and build an `order` schema (packages/db) once the checkout flow is decided — unblocks cart/ordering UI in both apps
+2. Merchant app: live orders-in-progress view (also blocked on the `order` table)
+3. Dev: test the scan flow on a real device/simulator against a real QR encoding `awarin-t01`..`awarin-t10` (or `http://localhost:8787` if testing against `wrangler dev` instead of the deployed Worker)
+
+**Blockers:** none for what's built; cart/ordering needs the `order` table designed first
 
 ---
 

@@ -1,9 +1,11 @@
 import { useShop } from "@/store/shop/shop-id";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import {
   FlatList,
   Image,
+  Pressable,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -61,6 +63,25 @@ export default function ShopIndex() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView showsVerticalScrollIndicator={false}>
+        {/* Scan table QR — the real, connected entry point (packages: db/api) */}
+        <Pressable
+          onPress={() => router.push("/(tabs)/shop/scan")}
+          className="mx-4 mt-4 bg-[#00B14F] rounded-2xl px-4 py-4 flex-row items-center justify-between min-h-[44px]"
+        >
+          <View className="flex-row items-center flex-1">
+            <View className="w-10 h-10 rounded-xl bg-white/20 items-center justify-center mr-3">
+              <Ionicons name="qr-code-outline" size={22} color="white" />
+            </View>
+            <View className="flex-1">
+              <Text className="text-white font-bold text-base">สแกน QR โต๊ะ</Text>
+              <Text className="text-white/80 text-xs mt-0.5">
+                นั่งที่ร้านแล้ว? สแกนเพื่อดูเมนูได้เลย
+              </Text>
+            </View>
+          </View>
+          <Ionicons name="chevron-forward" size={20} color="white" />
+        </Pressable>
+
         {/* Category Grid */}
         {/* Category Horizontal Menu */}
         <View className="py-4 bg-gray-50">
