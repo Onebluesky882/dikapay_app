@@ -17,8 +17,8 @@ Conductor Branch: main
 | stage-5-personal-transaction-ledger | apps/Dikapay | stage-2, stage-9 | PLANNING |
 | stage-6-merchant-revenue-dashboard | apps/Merchant, apps/Maneger | stage-2, stage-8 | PLANNING |
 | stage-7-multi-vertical-merchant-onboarding | apps/Merchant, packages/slip-verification-service | stage-2, stage-6, stage-8 | PLANNING |
-| stage-8-role-permission-system | apps/Merchant, apps/Maneger, new: packages/rbac-core | stage-1, stage-9 | PLANNING |
-| stage-9-backend-foundation | apps/api, packages/db, packages/auth, packages/config | stage-1 | IN_PROGRESS |
+| stage-8-role-permission-system | apps/Merchant, apps/Maneger, apps/api, new: packages/rbac-core | stage-1, stage-9 | IN_PROGRESS |
+| stage-9-backend-foundation | apps/api, packages/db, packages/auth, packages/config | stage-1 | COMPLETE |
 
 ---
 
@@ -182,9 +182,9 @@ Conductor Branch: main
 
 ### stage-8-role-permission-system
 
-**Domain:** apps/Merchant, apps/Maneger, new: packages/rbac-core
+**Domain:** apps/Merchant, apps/Maneger, apps/api, new: packages/rbac-core
 **Depends On:** stage-1, stage-9
-**Status:** `PLANNING`
+**Status:** `IN_PROGRESS`
 
 **Goal:** Shared RBAC layer implementing the role enum and permission matrix decided in DECISIONS.md → "Role-Based Access Control (RBAC), not per-role apps". `apps/Merchant` hosts three roles (staff / supervisor / owner) in one app gated by permission, `apps/Maneger` hosts `dikapay_admin`, `apps/Dikapay` stays role-implicit (`customer`).
 
@@ -194,8 +194,20 @@ Conductor Branch: main
 - Maneger: `dikapay_admin` gating for cross-merchant analytics, merchant onboarding approval, suspend/ban actions
 - Staff management UI (owner invites/removes staff, assigns supervisor/staff role) — depends on this package existing first
 
-**Next:** Conductor to write the `rbac-core` contract (role/permission shape) in CONTRACTS.md, then break into worker-sized tasks. Blocks stage-6 and stage-7, which both consume this package.
-**Blockers:** stage-9 (needs `user.role` from the auth system, which now exists — see stage-9)
+**Done (backend core — package + first real call site, ahead of app screens):**
+- `packages/rbac-core` created: `ROLES` (the role enum, now the **single source of truth** — see below) and `PERMISSIONS`, a `Record<Permission, Role[]>` matching DECISIONS.md's matrix exactly (`order:place`, `ledger:view-own`, `shop:view-orders`, `shop:accept-payment`, `shop:manage-menu`, `shop:void-refund`, `shop:view-revenue`, `shop:manage-staff`, `shop:manage-settings`, `platform:cross-merchant-analytics`, `platform:approve-merchant`, `platform:suspend-account`), plus `can(role, permission): boolean`. 6 unit tests covering staff/supervisor/owner/customer/admin boundaries, all passing.
+- `packages/db`'s `user.role` drizzle enum now imports `ROLES` from `rbac-core` instead of hardcoding the list a second time — one fewer place to drift. The raw-SQL `CHECK` constraint in `migrations/auth.sql` still has to be hand-synced if a role is ever added/removed (SQL migrations can't import TS).
+- `apps/api`'s `PATCH /api/shops/:slug/receiving-account` (stage-2) now calls `can(user.role, 'shop:manage-settings')` instead of the inline `user.role !== 'merchant_owner'` hack from stage-2 — resolves that stage's `TODO(stage-8)`. Resource ownership (`shop.ownerUserId === user.id`) stays a separate check at the call site — `rbac-core` deliberately only knows "this role can manage *a* shop's settings," not which shop.
+- `role` is cast (`user.role as Role`) at that one call site — better-auth's `additionalFields` types custom columns as plain `string`, not the literal union, even though the DB `CHECK` constraint guarantees the value. Worth remembering wherever `user.role` is read elsewhere.
+- `pnpm check-types` passes across `rbac-core`, `db`, `auth`, `api`
+
+**Not built yet:**
+- Merchant/Maneger app screens and their session/login-time role lookup + UI gating
+- Staff management (owner invites/assigns roles) — needs a real invite flow, not just direct-SQL role edits like the stage-2 smoke test used
+- No other `apps/api` route besides the one above calls `can()` yet — stage-6/7's routes (revenue dashboard, merchant onboarding approval) don't exist yet either
+
+**Next:** Conductor to write the `rbac-core` contract in CONTRACTS.md. Wire `can()` into any new `apps/api` route as it's built (stage-6, stage-7). Merchant/Maneger app-side gating is separate work once those apps have screens to gate.
+**Blockers:** none
 
 ---
 
@@ -203,7 +215,7 @@ Conductor Branch: main
 
 **Domain:** apps/api, packages/db, packages/auth, packages/config
 **Depends On:** stage-1
-**Status:** `IN_PROGRESS`
+**Status:** `COMPLETE`
 
 **Goal:** Give the three RN apps a real backend — auth (email/password + bearer token for mobile) and a database — so every other stage that needs a logged-in user (stage-5 ledger, stage-8 RBAC, eventually stage-2/3/4) has something to build on. Ported from `goveragent-template`'s `packages/auth` + `packages/db`, which are already Cloudflare D1-native, and adapted to this project (see DECISIONS.md → "Backend Stack").
 
@@ -217,12 +229,14 @@ Conductor Branch: main
 - Dev ran `wrangler login` and `wrangler d1 create dikapay-db` — D1 database provisioned, `database_id` filled into `apps/api/wrangler.toml` (kept `binding = "DB"` to match the code's `env.DB`, not the `dikapay_db` binding name wrangler's own create-output suggested)
 - `packages/db/migrations/auth.sql` applied to the **local** D1 instance (`wrangler d1 execute dikapay-db --file=...`, no `--remote` flag — 4 commands executed successfully, creates the `user`/`session`/`account`/`verification` tables)
 
-**Next (Dev/Conductor):**
-1. `cp .dev.vars.example .dev.vars` in `apps/api/`, then `pnpm dev` to smoke-test `/health` and `POST /api/auth/register` against the local D1
-2. When ready to actually deploy: re-run the migration with `--remote` (`wrangler d1 execute dikapay-db --remote --file=../../packages/db/migrations/auth.sql`) — the local run above does **not** touch the remote database
-3. Conductor: write the `/api/auth/*` contract in CONTRACTS.md once verified working
+**Also done (2026-07-24 — completes this stage):**
+- All 5 schema migrations + Awarin seed data applied to remote D1 (`served_by: v3-prod`, SIN region — see stage-2/stage-4)
+- `SLIP_VERIFICATION_INTERNAL_SECRET` generated (`openssl rand -hex 32`) and set as a real Worker secret via `wrangler secret put` — value given to Dev in chat, needs to match whatever's set as `INTERNAL_SECRET` when `packages/slip-verification-service` is actually deployed/run
+- `wrangler deploy` run (`pnpm run deploy` — note: plain `pnpm deploy` is pnpm's own reserved command and silently does the wrong thing, must use `run`). Live at **https://dikapay-api.onebluesky882.workers.dev**, `workers.dev` route auto-enabled. Smoke-tested `/health` and `/api/shops/awarin` against the real deployed Worker, both correct.
+- `ALLOWED_ORIGINS` is still empty in production — CORS currently only allows the hardcoded local Expo dev origins from `packages/auth`'s defaults. Not a problem yet (no app calls it in production), but set this once an app has a real deploy/EAS URL.
 
-**Blockers:** none — D1 provisioned, migrated locally AND remotely (2026-07-24: all 5 schema migrations + Awarin seed data applied to remote D1, `served_by: v3-prod`, SIN region, verified by reading back the seeded rows); `pnpm dev` smoke-tested successfully against local D1 (see stage-2 and stage-4 entries)
+**Next:** None for this stage — complete. `CONTRACTS.md` entry for `/api/auth/*` still not written (Conductor todo, low urgency until a client actually integrates against it).
+**Blockers:** none
 
 ---
 

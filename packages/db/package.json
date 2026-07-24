@@ -10,6 +10,7 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@gover-agent/rbac-core": "workspace:*",
     "drizzle-orm": "latest"
   },
   "devDependencies": {

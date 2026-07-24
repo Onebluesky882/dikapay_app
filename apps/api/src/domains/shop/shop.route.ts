@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { createDb, eq, inArray } from '@gover-agent/db'
 import { shop, diningTable, menuItem, modifierGroup, modifierOption } from '@gover-agent/db/schema'
 import { createAuth } from '@gover-agent/auth'
+import { can, type Role } from '@gover-agent/rbac-core'
 import { z } from 'zod'
 
 type Bindings = { DB: D1Database; OWNER_EMAIL: string; ALLOWED_ORIGINS: string }
@@ -31,8 +32,9 @@ shopRouter.get('/:slug', async (c) => {
   return c.json(row)
 })
 
-// Locked to the shop's owner (DECISIONS.md RBAC: "Manage store settings" is owner-only).
-// TODO(stage-8): replace this inline role+ownership check with packages/rbac-core once it exists.
+// Gated by packages/rbac-core's permission matrix (DECISIONS.md RBAC: "shop:manage-settings"
+// is owner-only) PLUS a resource-ownership check — rbac-core only knows "this role can manage
+// *a* shop's settings", not "this user owns *this* shop", which stays this route's job.
 shopRouter.patch('/:slug/receiving-account', async (c) => {
   const db = createDb(c.env.DB)
   const shopRow = await findShopBySlug(db, c.req.param('slug'))
@@ -40,7 +42,9 @@ shopRouter.patch('/:slug/receiving-account', async (c) => {
 
   const user = await getCurrentUser(c)
   if (!user) return c.json({ error: 'Unauthorized' }, 401)
-  if (user.role !== 'merchant_owner' || shopRow.ownerUserId !== user.id) {
+  // better-auth's additionalFields types role as plain string, not the Role union — the DB's
+  // CHECK constraint (packages/db/migrations/auth.sql) is what actually guarantees this cast is safe.
+  if (!can(user.role as Role, 'shop:manage-settings') || shopRow.ownerUserId !== user.id) {
     return c.json({ error: 'Only the shop owner can change the receiving account' }, 403)
   }
 

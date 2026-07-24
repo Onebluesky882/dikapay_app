@@ -28,6 +28,17 @@ Log
 <!-- Add newest entries at the top -->
 
 Date: 2026-07-24
+File(s) changed: apps/api/wrangler.toml (secret set, not committed), packages/rbac-core/* (new), packages/db/src/schema/auth.ts, packages/db/package.json, apps/api/src/domains/shop/shop.route.ts, apps/api/package.json, agentic/PIPELINE.md
+Reason: Dev: "เตรียมไว้ก่อนแล้วข้ามต่อไป" (prepare it, then move on) in response to being asked whether to deploy apps/api or wait for Slip2Go setup — deployed, then moved to the next unblocked backend stage (stage-8) rather than waiting on Dev's external Slip2Go account.
+Impact:
+- Generated a random SLIP_VERIFICATION_INTERNAL_SECRET (openssl rand -hex 32) and set it as a real Worker secret via `wrangler secret put` (value given to Dev in chat — needs to match whatever's set as INTERNAL_SECRET when slip-verification-service actually runs).
+- Deployed apps/api via `pnpm run deploy` (note: plain `pnpm deploy` is pnpm's own reserved command, does the wrong thing silently — must use `run`). Live at https://dikapay-api.onebluesky882.workers.dev, smoke-tested /health and /api/shops/awarin against the real deployment. This completes stage-9.
+- Built packages/rbac-core: ROLES (now the single canonical source for the role enum — packages/db imports it instead of hardcoding the list a second time) and PERMISSIONS/can() matching DECISIONS.md's matrix exactly, with 6 passing unit tests.
+- Wired can() into the one real call site that needed it (shop.route.ts's receiving-account lock from stage-2), resolving that stage's TODO(stage-8). Had to cast user.role as Role at that call site — better-auth's additionalFields types custom columns as plain string, not the literal union, despite the DB CHECK constraint guaranteeing the value.
+- Hit a flaky pnpm/esbuild postinstall race again (different esbuild version fails each run with a version-mismatch error) that this time actually blocked vitest from being linked into packages/rbac-core. Worked around it with `pnpm install --ignore-scripts` — skips esbuild's binary-version sanity check (not required for esbuild/vitest/wrangler to actually function, confirmed by wrangler dev and vitest both working afterward). Worth trying this flag first if the same symptom recurs, rather than re-debugging from scratch.
+- pnpm check-types passes across rbac-core/db/auth/api. PIPELINE.md stage-9 marked COMPLETE, stage-8 marked IN_PROGRESS with full done/not-done breakdown.
+
+Date: 2026-07-24
 File(s) changed: agentic/PIPELINE.md, agentic/ARCHITECTURE.md
 Reason: Dev chose "Migrate remote D1" when asked what to do next after stage-2's first backend slice landed.
 Impact: Ran all 5 schema migrations (auth, shop, shop-receiving-account, menu, payment) plus both Awarin seed files against the REAL remote Cloudflare D1 (`wrangler d1 execute dikapay-db --remote`, not local) — confirmed live (`served_by: v3-prod`, SIN region) by reading back the shop/tables/menu item. Remote D1 now has 10 tables and matches local. `apps/api` itself is still not deployed (`wrangler deploy` not run) and `SLIP_VERIFICATION_INTERNAL_SECRET` is not yet set as a real secret — deploying now would run but the payment route would fail closed until that secret exists.

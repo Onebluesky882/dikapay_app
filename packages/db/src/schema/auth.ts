@@ -1,17 +1,18 @@
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
+import { ROLES } from '@gover-agent/rbac-core'
 
 // Role enum matches agentic/DECISIONS.md → "Role-Based Access Control (RBAC), not per-role apps".
 // customer = general user (apps/Dikapay), merchant_staff/merchant_supervisor/merchant_owner = apps/Merchant
 // (gated by permission, not separate apps), dikapay_admin = company admin (apps/Maneger).
+// ROLES is imported from @gover-agent/rbac-core, the single source of truth — see that
+// package's roles.ts for the one place this can't reach (the raw-SQL CHECK constraint).
 export const user = sqliteTable('user', {
   id: text('id').primaryKey(),
   name: text('name').notNull(),
   email: text('email').notNull().unique(),
   emailVerified: integer('email_verified', { mode: 'boolean' }).notNull().default(false),
   image: text('image'),
-  role: text('role', {
-    enum: ['customer', 'merchant_staff', 'merchant_supervisor', 'merchant_owner', 'dikapay_admin'],
-  }).notNull().default('customer'),
+  role: text('role', { enum: [...ROLES] }).notNull().default('customer'),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
   updatedAt: integer('updated_at', { mode: 'timestamp' }).notNull(),
 })

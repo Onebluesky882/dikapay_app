@@ -13,6 +13,7 @@
   "dependencies": {
     "@gover-agent/auth": "workspace:*",
     "@gover-agent/db": "workspace:*",
+    "@gover-agent/rbac-core": "workspace:*",
     "better-auth": "^1.6.19",
     "hono": "latest",
     "zod": "^4.4.3"
