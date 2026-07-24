@@ -28,6 +28,11 @@ Log
 <!-- Add newest entries at the top -->
 
 Date: 2026-07-24
+File(s) changed: agentic/PIPELINE.md (no code change)
+Reason: Dev finished running all local D1 migrations and verified table-by-table against expectations this agent gave (table list, shop row, dining_table count, menu_item, modifier_group, modifier_option) — all 10 tables present, all data matched exactly.
+Impact: Confirms local D1, remote D1, and this agent's sandbox D1 are now fully in sync for the schema/seed data built so far. No open D1-sync gaps remain for stage-2/4/9.
+
+Date: 2026-07-24
 File(s) changed: packages/db/migrations/seed-awarin.sql, packages/db/migrations/seed-awarin-menu.sql
 Reason: Dev hit "UNIQUE constraint failed: shop.slug" re-running seed-awarin.sql in their own terminal — expected, since Dev had already run it successfully in an earlier round (before payment/menu schema existed) and the seed files weren't idempotent.
 Impact: Changed all INSERT statements in both seed files to INSERT OR IGNORE, so re-running the full migration sequence on a DB that already has some/all of this data no longer errors — it just skips rows that already exist. No schema change, no data change for anyone running these fresh.

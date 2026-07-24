@@ -119,10 +119,11 @@ Conductor Branch: main
 
 **Fixed 2026-07-24:** Dev hit `UNIQUE constraint failed: shop.slug` re-running `seed-awarin.sql` against their local D1 (already had the data from an earlier round). Both seed files now use `INSERT OR IGNORE` — safe to re-run, skips rows that already exist instead of erroring.
 
+**Verified 2026-07-24:** Dev ran all remaining migrations locally and confirmed, table by table (tables list, shop row, dining_table count, menu_item, modifier_group, modifier_option) — all 10 tables present, data matches exactly what's in remote D1 and this agent's sandbox. Local, remote, and sandbox D1 are now fully in sync.
+
 **Next:**
-1. Dev: finish running the migrations locally in order — `shop-receiving-account.sql`, `menu.sql`, `payment.sql`, `seed-awarin.sql`, `seed-awarin-menu.sql` (the local D1 this agent's sandbox writes to is a **separate** file from the one `pnpm dev` uses in your terminal, same as `auth.sql` before). Remote D1 already has all of this (migrated 2026-07-24, see stage-9/stage-2).
-2. Dikapay app: build the actual scan → menu → cart screens consuming these routes
-3. Merchant app: live orders-in-progress view (not started — no `order` table yet; that's the next schema piece once checkout flow is designed)
+1. Dikapay app: build the actual scan → menu → cart screens consuming these routes
+2. Merchant app: live orders-in-progress view (not started — no `order` table yet; that's the next schema piece once checkout flow is designed)
 
 **Blockers:** none — waiting on Dev applying migrations in their own local D1
 
