@@ -131,6 +131,8 @@ Conductor Branch: main
 
 **Deliberately not built this pass:** cart/checkout/ordering UI — there's no `order` table yet (see below), so "add to cart" would be fake/non-functional. The menu screen says so explicitly ("สั่งอาหารผ่านแอปยังไม่เปิดใช้งาน") rather than pretending to work.
 
+**Fixed 2026-07-24:** Expo SDK upgraded 55→57 (React 19.2.3, RN 0.86, TS 6.0.3) across Dikapay/Maneger/Merchant. Also corrected a misplacement from this stage's earlier UI slice: the register/category/verification screens were added under `apps/Dikapay/src/app/(shop)/` even though they're merchant onboarding, not part of the customer scan→menu flow — moved to `apps/Merchant/src/app/(shop)/` (see stage-7). Dikapay's `(shop)` route reference removed from `_layout.tsx`; `tsc`/`eslint` clean across all three apps. Full detail in DEV_LOG.md (2026-07-24).
+
 **Next:**
 1. Design and build an `order` schema (packages/db) once the checkout flow is decided — unblocks cart/ordering UI in both apps
 2. Merchant app: live orders-in-progress view (also blocked on the `order` table)
@@ -188,6 +190,8 @@ Conductor Branch: main
 - Merchant onboarding flow that works without a menu/ordering step
 - Onboarding approval gated to `dikapay_admin` role (see stage-8 / DECISIONS.md → RBAC)
 - Confirm stage-2's payment-event contract and stage-6's dashboard already work generically across merchant types (they should, if stage-2/6 were built vertical-agnostic)
+
+**Relocated in 2026-07-24 (ahead of formal kickoff):** `apps/Merchant/src/app/(shop)/` now has `register.tsx` (shop name/category/owner/phone/address form), `verification.tsx`, and a `(tabs)/` stub — moved from a misplaced stage-4 slice, not newly built for this stage. Not usable yet: no `Stack.Screen` entry for `(shop)` in Merchant's root `_layout.tsx` and no UI links to it, so it's unreachable; `(shop)/_layout.tsx` has an unimplemented role-gate TODO; `apps/Merchant` has no auth/session state at all (`sign-in.tsx` empty, `index.tsx` a placeholder). Real stage-7 work still needs stage-8's RBAC wired into a Merchant auth flow before this is functional.
 
 **Next:** Not started — depends on stage-2, stage-6, and stage-8.
 **Blockers:** stage-2, stage-6, stage-8 not complete

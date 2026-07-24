@@ -36,6 +36,9 @@ export default function ScannedTableScreen() {
   }, [qrToken]);
 
   useEffect(() => {
+    // Fetching data on mount, not deriving state from props/refs — the
+    // react-hooks/set-state-in-effect heuristic can't tell those apart.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
   }, [load]);
 

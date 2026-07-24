@@ -2,7 +2,7 @@ import { useCartStore } from "@/store/Cart/store-order";
 import { NativeTabs } from "expo-router/unstable-native-tabs";
 import React from "react";
 import { DynamicColorIOS } from "react-native";
-export default function _layout() {
+export default function TabLayout() {
   const cart = useCartStore((state) => state.cart);
   const openBadge = cart.length.toString();
   return (
